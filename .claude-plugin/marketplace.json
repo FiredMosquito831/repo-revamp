@@ -1,4 +1,5 @@
 {
+  "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
   "name": "danube-labs",
   "owner": {
     "name": "Danube Labs",
@@ -13,7 +14,6 @@
       "name": "repo-revamp",
       "source": "./",
       "description": "Turn a GitHub repository into a live, polished, search-optimised product site: recon, spec, delegated build of a generated docs/ site, reviewed screenshots, original design, full SEO, deployment and verification.",
-      "version": "1.0.0",
       "category": "development",
       "tags": [
         "revamp",

@@ -2,6 +2,13 @@
 
 All notable changes to this plugin are recorded here. The format follows Keep a Changelog; the project uses semantic versioning.
 
+## [1.0.1] — 2026-11-10
+
+### Changed
+
+- The manifests declare their JSON schemas, so editors validate them.
+- The plugin version lives only in `plugin.json`; the marketplace entry no longer duplicates it.
+
 ## [1.0.0] — 2026-11-10
 
 ### Added
