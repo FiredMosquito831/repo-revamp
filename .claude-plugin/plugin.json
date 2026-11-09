@@ -1,0 +1,24 @@
+{
+  "name": "repo-revamp",
+  "version": "1.0.0",
+  "description": "Turn a GitHub repository into a live, polished, search-optimised product site: recon, spec, delegated build of a generated docs/ site, reviewed screenshots, original design, full SEO, deployment and verification.",
+  "author": {
+    "name": "Danube Labs",
+    "url": "https://github.com/FiredMosquito831"
+  },
+  "homepage": "https://github.com/FiredMosquito831/repo-revamp",
+  "repository": "https://github.com/FiredMosquito831/repo-revamp",
+  "license": "MIT",
+  "keywords": [
+    "revamp",
+    "website",
+    "documentation",
+    "seo",
+    "github-pages",
+    "cloudflare-pages",
+    "static-site",
+    "screenshots",
+    "accessibility",
+    "orchestration"
+  ]
+}

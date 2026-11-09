@@ -1,0 +1,28 @@
+{
+  "name": "danube-labs",
+  "owner": {
+    "name": "Danube Labs",
+    "url": "https://github.com/FiredMosquito831"
+  },
+  "metadata": {
+    "description": "Claude Code plugins from Danube Labs.",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "repo-revamp",
+      "source": "./",
+      "description": "Turn a GitHub repository into a live, polished, search-optimised product site: recon, spec, delegated build of a generated docs/ site, reviewed screenshots, original design, full SEO, deployment and verification.",
+      "version": "1.0.0",
+      "category": "development",
+      "tags": [
+        "revamp",
+        "website",
+        "documentation",
+        "seo",
+        "deployment",
+        "verification"
+      ]
+    }
+  ]
+}
