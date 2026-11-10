@@ -2,6 +2,17 @@
 
 All notable changes to this plugin are recorded here. The format follows Keep a Changelog; the project uses semantic versioning.
 
+## [1.1.0] — 2026-11-10
+
+### Added
+
+- `08-seo.md` now covers keyword strategy: per-page keyword sets in `site/content/seo.json`, the rules for truthful keywords, and the build-time validation (title length, description range, 8-14 keywords, no cross-page duplication).
+- Per-product pages: a page per shipped product, with its own title, description, keyword set and `SoftwareApplication` JSON-LD, so the product page ranks for the product term and the home page ranks for the category.
+- Harness landing pages (`/for/claude-code/`, `/for/codex/`, `/for/opencode/`, `/for/antigravity/`) for the "product for harness" queries.
+- Machine-readable surfaces: `llms.txt`, `llms-full.txt`, `security.txt`, and the structured-data table beyond the basics (WebSite, TechArticle, HowTo, ImageGallery).
+- Canonical, `hreflang` and duplicate-page rules.
+- Repository SEO beyond the description: topic sets by repository kind, social preview, README first screen, releases, discussions.
+
 ## [1.0.1] — 2026-11-10
 
 ### Changed

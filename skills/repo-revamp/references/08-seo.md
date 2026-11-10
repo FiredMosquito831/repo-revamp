@@ -2,6 +2,119 @@
 
 Every page is generated with complete metadata. Nothing is left to a plugin or a crawler's guess.
 
+## Keywords
+
+`<meta name="keywords">` is ignored by Google for ranking, but it is still read by several smaller engines, by site-search tools, and by the people who audit your page. Emit it, and keep it truthful.
+
+Rules:
+
+- **One keyword set per page**, not one for the site. A product page needs its product's terms; the home page needs the category terms.
+- **Every keyword must be true of that page.** "gmail mcp server" belongs on the Gmail page, not on the home page.
+- **Include the harness names** the product actually supports: `claude code`, `codex`, `opencode`, `antigravity`. These are the highest-intent queries for an MCP product.
+- **Include the task phrasing** a person would type: "automate site index submission", "download moodle courses", not only the product name.
+- **Include the local language** when the audience is local. A Romanian-audience product needs Romanian terms, not only English ones.
+- **No keyword stuffing.** 8–14 terms per page. A term that appears on every page of the site is a site-level term, not a page term.
+- **No invented capability.** A keyword that describes something the product does not do is a false claim and belongs in the claims ledger as `removed`.
+
+## Per-product pages
+
+When the repository ships many products (a plugin per product, a server per API), each product gets its own page with its own:
+
+- `<title>`: the product name plus its category and one harness, ≤ 60 characters
+- description: what it does, for whom, and the tool count, 120–160 characters
+- keyword set: 8–14 terms, product-specific
+- `SoftwareApplication` JSON-LD with `name`, `applicationCategory`, `operatingSystem`, `softwareVersion`, `offers` at zero, and the product's own `featureList`
+- a "what you can do with it" list of real tasks, each traceable to a tool
+
+The product page is the page that ranks for "`<product>` mcp server". The home page ranks for the category. Do not let the home page compete with its own product pages for the same term.
+
+## Harness landing pages
+
+When a product supports several agent harnesses, each harness gets a landing page (`/for/claude-code/`, `/for/codex/`, `/for/opencode/`, `/for/antigravity/`) with:
+
+- a harness-specific title and description
+- the exact install command for that harness
+- the same product facts, not different ones
+- a link back to the product pages and the install page
+
+These pages answer "`<product>` for `<harness>`", which is a distinct query from "`<product>` mcp server".
+
+## Machine-readable surfaces
+
+Search engines are not the only readers. Add these files at the site root:
+
+### `llms.txt`
+
+A short Markdown index for language models and agent crawlers:
+
+```markdown
+# <Product>
+
+> One sentence: what it is and who it is for.
+
+<One paragraph of context: the category, the licence, the version.>
+
+## Docs
+- [Install](https://<host>/install/): one line on what it covers
+- [Products](https://<host>/products/): the full list
+
+## Optional
+- [License](https://<host>/license/)
+```
+
+Rules: plain Markdown, absolute links, one line per link, no marketing language. It is a map, not a pitch.
+
+### `llms-full.txt`
+
+The same site as plain text, concatenated, for a model that wants the whole thing in one fetch. Optional; generate it from the same content as the HTML so it cannot drift.
+
+### `security.txt`
+
+Per RFC 9116, at `/.well-known/security.txt`:
+
+```text
+Contact: https://github.com/<owner>/<repo>/security/advisories/new
+Expires: <a date within one year>
+Preferred-Languages: en
+Canonical: https://<host>/.well-known/security.txt
+```
+
+### `humans.txt` and `sitemap` index
+
+Optional. A `sitemap` index is worth it only above 50,000 URLs.
+
+## Structured data beyond the basics
+
+| Page | Types |
+|---|---|
+| Home | `WebSite` with `potentialAction` (`SearchAction`) only if the site has search; `SoftwareApplication` or `WebApplication` |
+| Product page | `SoftwareApplication` plus `BreadcrumbList` |
+| Docs page | `TechArticle` with `about`, `proficiencyLevel` |
+| FAQ | `FAQPage` |
+| How-to page | `HowTo` with `step` items |
+| Gallery | `ImageGallery` |
+| License | `WebPage` with `license` |
+| Every page | `WebPage`, and `Organization` once at the site level |
+
+## Canonical, hreflang and duplicates
+
+- **Canonical** on every page, absolute, with the trailing slash.
+- **`hreflang`** on every page of a multilingual site: one alternate per language plus `x-default`. `x-default` points at the primary language, not at English by default.
+- **No duplicate titles or descriptions** across pages. The builder's gate enforces uniqueness.
+- **No `noindex`** on any page that should rank. The 404 and any staging page carry it.
+
+## The keyword file
+
+Keep the keyword sets in data, not in templates: `site/content/seo.json`, keyed by page path and language. The builder reads it and emits the tags. A page without a keyword set fails the build, so a new page cannot ship unoptimised.
+
+Validate at build time:
+
+- title ≤ 60 characters
+- description 120–160 characters
+- 8–14 keywords
+- no keyword duplicated across more than three pages
+- every keyword appears in the page's own text or is a documented synonym
+
 ## Per-page metadata
 
 The builder emits these from the page's content data.
@@ -181,10 +294,25 @@ gh api -X PUT repos/<owner>/<repo>/topics \
 
 Rules:
 
-- **Description:** one line, no hype, the search snippet under the repo name.
+- **Description:** one line, no hype, the search snippet under the repo name. Lead with the category term someone would search ("Google Workspace MCP servers"), then the differentiator.
 - **Homepage:** the live URL.
 - **Topics:** 10–15, lowercase, hyphenated, accurate. No topic the project does not earn.
 - **Never change visibility, name, default branch or settings** as part of SEO.
+
+### Topic sets that work
+
+| Repository kind | Topics |
+|---|---|
+| MCP server | `mcp`, `mcp-server`, `model-context-protocol`, `claude-code`, `claude-code-plugin`, `codex`, `opencode`, `ai-agents`, `llm-tools`, plus one per product area |
+| Plugin marketplace | `claude-code`, `claude-code-plugin`, `plugin`, `marketplace`, plus the domain terms |
+| Documentation site | the product terms plus `documentation`, `static-site`, `seo` |
+
+### Repository SEO beyond the description
+
+- **Social preview:** GitHub renders `og:image` from the repository's social preview setting. Upload the same 1200×630 image the site uses, so a shared repository link looks like the site.
+- **README first screen:** the first 300 characters are what search engines and social cards show. Put the category term and the value there, not a logo.
+- **Releases:** a tagged release with notes ranks for "`<product>` release" and gives the repository a fresh timestamp.
+- **Discussions and issues:** open, answered issues are indexed and rank for long-tail questions. Do not close a question without an answer.
 
 ## Verification
 
