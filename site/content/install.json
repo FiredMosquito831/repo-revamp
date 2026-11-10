@@ -13,6 +13,12 @@
   "toc": true,
   "sections": [
     { "type": "h2", "text": "The one-line install" },
+    {
+      "type": "figure",
+      "diagram": "install-flow",
+      "caption": "The four steps from zero to a first revamp.",
+      "text_alt": "Step one: add the marketplace with the plugin marketplace add command, passing FiredMosquito831/repo-revamp. Step two: install the plugin with the plugin install command, either by name at danube-labs or in one line with the marketplace flag. Step three: restart Claude Code so the skill, commands and agents load in a new session. Step four: run the revamp command on a repository, which starts the state machine at INTAKE."
+    },
     { "type": "p", "text": "The repository is its own marketplace, so one command installs the plugin and registers the marketplace it comes from:" },
     { "type": "code", "label": "Claude Code", "text": "/plugin install repo-revamp --marketplace FiredMosquito831/repo-revamp" },
     { "type": "p", "text": "Run it inside Claude Code. The plugin is fetched from the public repository, and the five commands and three agents become available in the session." },
