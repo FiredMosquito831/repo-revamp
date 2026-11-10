@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Orchestration | repo-revamp</title>
+<meta name="description" content="How a revamp is delegated: one implementer, a written brief, progress and handoff files, tracking at every boundary and lessons that become rules.">
+<link rel="canonical" href="https://reporevamp.danubelabs.net/orchestration/">
+<meta name="theme-color" content="#0B0F14">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="repo-revamp">
+<meta property="og:title" content="Orchestration | repo-revamp">
+<meta property="og:description" content="How a revamp is delegated: one implementer, a written brief, progress and handoff files, tracking at every boundary and lessons that become rules.">
+<meta property="og:url" content="https://reporevamp.danubelabs.net/orchestration/">
+<meta property="og:image" content="https://reporevamp.danubelabs.net/og.png">
+<meta property="og:image:alt" content="repo-revamp: the playbook that turns a repository into a live, documented, search-indexed site.">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Orchestration | repo-revamp">
+<meta name="twitter:description" content="How a revamp is delegated: one implementer, a written brief, progress and handoff files, tracking at every boundary and lessons that become rules.">
+<meta name="twitter:image" content="https://reporevamp.danubelabs.net/og.png">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Orchestration","url":"https://reporevamp.danubelabs.net/orchestration/","description":"How a revamp is delegated: one implementer, a written brief, progress and handoff files, tracking at every boundary and lessons that become rules."}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://reporevamp.danubelabs.net/"},{"@type":"ListItem","position":2,"name":"Orchestration","item":"https://reporevamp.danubelabs.net/orchestration/"}]}</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="/">
+      <img class="brand-mark" src="/favicon.svg" alt="repo-revamp" width="30" height="30">
+      <span class="brand-name">repo-revamp</span>
+      <span class="brand-tag">v1.0.1</span>
+    </a>
+    <nav class="site-nav" aria-label="Primary">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/install/">Install</a></li>
+        <li><a href="/quick-start/">Quick start</a></li>
+        <li><a href="/phases/">Phases</a></li>
+        <li><a href="/gates/">Gates</a></li>
+        <li><a href="/screenshots/">Screenshots</a></li>
+        <li><a href="/deployment/">Deployment</a></li>
+        <li><a href="/orchestration/" aria-current="page">Orchestration</a></li>
+        <li><a href="/reference/">Reference</a></li>
+        <li><a href="/faq/">FAQ</a></li>
+        <li><a href="/about/">About</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+<main id="main" class="site-main">
+<article class="page">
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <ol>
+      <li><a href="/">Home</a></li>
+      <li><span aria-current="page">Orchestration</span></li>
+    </ol>
+  </nav>
+  <header class="page-head">
+    <p class="eyebrow">Process</p>
+    <h1>Orchestration</h1>
+    <p class="lead">The orchestrator does not build the site. It reconnoitres, writes the spec and the brief, verifies the result, deploys and reports. The context it protects is the context that catches mistakes.</p>
+  </header>
+  <div class="page-grid">
+    <nav class="toc" aria-label="On this page">
+      <p class="toc-title">On this page</p>
+      <ol>
+        <li><a href="#the-loop">The loop</a></li>
+        <li><a href="#concurrency">Concurrency</a></li>
+        <li><a href="#the-brief">The brief</a></li>
+        <li><a href="#progress-and-handoff">Progress and handoff</a></li>
+        <li><a href="#tracking">Tracking</a></li>
+        <li><a href="#lessons">Lessons</a></li>
+        <li><a href="#context-discipline">Context discipline</a></li>
+        <li><a href="#what-goes-wrong-and-the-counter-measure">What goes wrong, and the counter-measure</a></li>
+      </ol>
+    </nav>
+    <div class="prose">
+<p>A revamp has four roles, and the separation is the point. The owner decides and clicks the steps only an owner can click. The orchestrator investigates, specifies, verifies, deploys and reports. One implementer builds. A read-only investigator may run beside it.</p>
+<div class="table-wrap"><table><caption>Who does what</caption><thead><tr><th scope="col">Role</th><th scope="col">Does</th><th scope="col">Never does</th></tr></thead><tbody><tr><td>Owner</td><td>Decides, approves, performs the owner-only steps, says merge</td><td>—</td></tr><tr><td>Orchestrator</td><td>Recon, spec, briefs, verification, deployment, merge, reporting, tracking</td><td>Builds the site itself, merges without a go</td></tr><tr><td>Implementer</td><td>Builds in a worktree, commits, pushes, opens the draft pull request</td><td>Merges, deploys, touches DNS or settings, edits the tracking files</td></tr><tr><td>Investigator</td><td>Read-only research and a spec</td><td>Commits, edits outside its scratch and the spec</td></tr></tbody></table></div>
+<h2 id="the-loop">The loop</h2>
+<p>Re-anchor, recon, spec, owner answers, one implementer, the agent ships the branch and the draft pull request, verify, deploy on the go, report, record. The loop is deliberately boring. Every step that could be skipped is a step that has produced a wrong site before.</p>
+<h2 id="concurrency">Concurrency</h2>
+<p>For a single repository, at most two agents run: one implementer and, beside it, read-only investigators. For a batch, one agent per repository, launched together, with the coordinator deploying one repository at a time. Never two agents on one repository, never two agents touching the same DNS zone or the same Cloudflare account at once, and one production pull request at a time per repository.</p>
+<h2 id="the-brief">The brief</h2>
+<p>A brief is a spec, not a summary. It carries the role line, the spec path and the binding decisions with their timestamp, the repository facts, the numbered scope and an explicit not-in-scope list, the hard rules, the verification bar, the ship sequence, the progress files and the report format.</p>
+<p>An agent that has to guess will guess wrong. The brief names the frozen paths, the forbidden reads, the secret rules and the exact commands that count as proof. The template is <code>BRIEF-SITE-BUILDER.template.md</code>.</p>
+<h2 id="progress-and-handoff">Progress and handoff</h2>
+<p>Every agent keeps <code>PROGRESS.md</code> and <code>HANDOFF.md</code> in its worktree from the first edit and commits work in progress early. If the agent is killed by a limit or a crash, the on-disk state is the resume point. If a resume fails outright, a fresh agent gets the complete brief; the work is not re-derived from memory.</p>
+<p>The handoff has seven parts: the read order, the state with what is confirmed, the remaining queue in order, what the owner still owes, the lessons of the arc, the verify commands for the next session, and the environment facts.</p>
+<h2 id="tracking">Tracking</h2>
+<p>Three files are updated at every boundary. The state file is the live state machine. The queue lists every item with its status: running, queued, finished or held. The handoff is written before every pause or compaction.</p>
+<p>When the project uses the working-notes skill, its queue is the queue and its handoff is the handoff. The revamp does not duplicate tracking; it uses the project's own.</p>
+<h2 id="lessons">Lessons</h2>
+<p>A lesson qualifies when it is one of five things: a wrong premise that cost time, an agent slip that a rule now forbids, a trap of the machine or the vendor that bit once, a false positive or false negative, or a measurement that overturned an assumption.</p>
+<p>It is written as the lesson first, then the evidence that makes it memorable: the number, the row, the error text. Then its origin: date, pull request, repository. Duplicates are merged by adding the new origin. The rule that follows goes into the normative file the same day; the lesson keeps the why, the normative file keeps the what.</p>
+<h2 id="context-discipline">Context discipline</h2>
+<p>The orchestrator does not run investigations beyond a re-anchor; it delegates them. It takes conclusions, not file dumps. A subagent's report is a summary, so the claims that matter are verified rather than relayed. When the context approaches its limit, the handoff is written first and the session compacts second.</p>
+<h2 id="what-goes-wrong-and-the-counter-measure">What goes wrong, and the counter-measure</h2>
+<div class="table-wrap"><table><caption>The failure modes the playbook was written against</caption><thead><tr><th scope="col">Failure</th><th scope="col">Counter-measure</th></tr></thead><tbody><tr><td>Silence</td><td>The brief says the final message is the deliverable; partial is acceptable, silence is not.</td></tr><tr><td>A kill from a limit or a crash</td><td>Progress and handoff files from the first edit, work in progress committed early.</td></tr><tr><td>A resume that fails</td><td>Spawn a fresh agent with the complete brief; do not re-derive the work.</td></tr><tr><td>Waiting or polling forever</td><td>Bounded loops with timeouts only; no foreground sleep over ten minutes.</td></tr><tr><td>Wrong claims</td><td>Budget half of an agent's findings to be wrong; check every file and line.</td></tr><tr><td>Writing to the wrong file</td><td>Briefs forbid editing the tracking files.</td></tr><tr><td>A relative worktree path</td><td>Absolute paths in every brief.</td></tr></tbody></table></div>
+<aside class="callout callout-info"><p class="callout-title">The orchestrator verifies itself</p><p>An agent's report is a summary, and a summary is a hypothesis. The orchestrator runs the recipe, looks at a screenshot, reads the deviations and reports CONFIRMED, UNVERIFIED and NOT DONE separately.</p></aside>
+<div class="hero-actions"><a class="btn btn-secondary" href="/phases/">The phases</a><a class="btn btn-primary" href="/reference/">The reference</a></div>
+    </div>
+  </div>
+</article>
+</main>
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <nav class="footer-nav" aria-label="Footer">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/install/">Install</a></li>
+        <li><a href="/reference/">Reference</a></li>
+        <li><a href="/faq/">FAQ</a></li>
+        <li><a href="/license/">License</a></li>
+        <li><a href="https://github.com/FiredMosquito831/repo-revamp">GitHub</a></li>
+      </ul>
+    </nav>
+    <p class="legal">repo-revamp is an independent project. It is not affiliated with, endorsed by, or sponsored by Anthropic. Claude and Claude Code are trademarks of Anthropic.</p>
+    <p class="legal">Licensed under the MIT License.</p>
+    <p class="legal muted">Copyright 2026 Danube Labs. Built from the plugin's own playbook.</p>
+  </div>
+</footer>
+<script src="/assets/site.js" defer></script>
+</body>
+</html>

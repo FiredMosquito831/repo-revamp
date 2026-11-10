@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>repo-revamp — the repository revamp playbook</title>
+<meta name="description" content="A Claude Code plugin that turns a repository into a live, documented, search-indexed site: phases, gates, screenshots, SEO, deployment and verification.">
+<link rel="canonical" href="https://reporevamp.danubelabs.net/">
+<meta name="theme-color" content="#0B0F14">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="repo-revamp">
+<meta property="og:title" content="repo-revamp — the repository revamp playbook">
+<meta property="og:description" content="A Claude Code plugin that turns a repository into a live, documented, search-indexed site: phases, gates, screenshots, SEO, deployment and verification.">
+<meta property="og:url" content="https://reporevamp.danubelabs.net/">
+<meta property="og:image" content="https://reporevamp.danubelabs.net/og.png">
+<meta property="og:image:alt" content="repo-revamp: the playbook that turns a repository into a live, documented, search-indexed site.">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="repo-revamp — the repository revamp playbook">
+<meta name="twitter:description" content="A Claude Code plugin that turns a repository into a live, documented, search-indexed site: phases, gates, screenshots, SEO, deployment and verification.">
+<meta name="twitter:image" content="https://reporevamp.danubelabs.net/og.png">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Turn a repository into a live, documented, search-indexed site.","url":"https://reporevamp.danubelabs.net/","description":"A Claude Code plugin that turns a repository into a live, documented, search-indexed site: phases, gates, screenshots, SEO, deployment and verification."}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"repo-revamp","alternateName":"repo-revamp","description":"A Claude Code plugin that turns a repository into a live, documented, search-indexed site: phases, gates, screenshots, SEO, deployment and verification.","applicationCategory":"DeveloperApplication","operatingSystem":"Claude Code","softwareVersion":"1.0.1","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"license":"https://opensource.org/license/mit","isAccessibleForFree":true,"featureList":["Phase state machine with an exit gate per phase","Deterministic site builder with hard gates","Reviewed screenshot pipeline with redaction and a manifest","Design tokens with computed contrast","Per-page SEO, JSON-LD, sitemap and a 1200 by 630 social image","GitHub Pages and Cloudflare Pages deployment","Verification recipe with CONFIRMED, UNVERIFIED and NOT DONE"],"author":{"@type":"Person","name":"Danube Labs","url":"https://github.com/FiredMosquito831"}}</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="/">
+      <img class="brand-mark" src="/favicon.svg" alt="repo-revamp" width="30" height="30">
+      <span class="brand-name">repo-revamp</span>
+      <span class="brand-tag">v1.0.1</span>
+    </a>
+    <nav class="site-nav" aria-label="Primary">
+      <ul>
+        <li><a href="/" aria-current="page">Home</a></li>
+        <li><a href="/install/">Install</a></li>
+        <li><a href="/quick-start/">Quick start</a></li>
+        <li><a href="/phases/">Phases</a></li>
+        <li><a href="/gates/">Gates</a></li>
+        <li><a href="/screenshots/">Screenshots</a></li>
+        <li><a href="/deployment/">Deployment</a></li>
+        <li><a href="/orchestration/">Orchestration</a></li>
+        <li><a href="/reference/">Reference</a></li>
+        <li><a href="/faq/">FAQ</a></li>
+        <li><a href="/about/">About</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+<main id="main" class="site-main">
+<article class="page">
+  <header class="page-head">
+    <p class="eyebrow">Claude Code plugin</p>
+    <h1>Turn a repository into a live, documented, search-indexed site.</h1>
+    <p class="lead">repo-revamp is the playbook that takes a GitHub repository from "here is an old repo" to a verified public site, without changing the product.</p>
+  </header>
+  <div class="page-grid">
+    <nav class="toc" aria-label="On this page">
+      <p class="toc-title">On this page</p>
+      <ol>
+        <li><a href="#what-it-does">What it does</a></li>
+        <li><a href="#the-phase-state-machine">The phase state machine</a></li>
+        <li><a href="#what-the-plugin-ships">What the plugin ships</a></li>
+        <li><a href="#a-real-run">A real run</a></li>
+        <li><a href="#verified-quick-facts">Verified quick facts</a></li>
+        <li><a href="#install">Install</a></li>
+        <li><a href="#questions-people-ask-first">Questions people ask first</a></li>
+        <li><a href="#where-to-go-next">Where to go next</a></li>
+      </ol>
+    </nav>
+    <div class="prose">
+<div class="hero-actions"><a class="btn btn-primary" href="/install/">Install</a><a class="btn btn-secondary" href="/quick-start/">Quick start</a><a class="btn btn-secondary" href="https://github.com/FiredMosquito831/repo-revamp">Read the source</a></div>
+<h2 id="what-it-does">What it does</h2>
+<p>Most repositories are judged in the first minute: by the README, by the demo, by whether a search engine can find them at all. A revamp fixes that surface. It is also the kind of work that quietly breaks things, because the person doing it is editing the same repository the product lives in.</p>
+<p>repo-revamp turns the work into a playbook with a state machine. A read-only recon establishes the facts. A numbered spec asks the owner the decisions that matter, one recommendation per question. One delegated agent builds a generated site in <code>docs/</code> behind a deterministic builder and a set of hard gates. The orchestrator verifies every claim itself, deploys on the owner's go, and records what it learned.</p>
+<p>The product is frozen throughout. A presentation-only revamp may change the README, the site, the builder, the requirements file, the site workflow and an append-only <code>.gitignore</code>. A boundary diff proves it: if the diff prints a product path, the pull request is out of scope.</p>
+<h2 id="the-phase-state-machine">The phase state machine</h2>
+<p>Every revamp moves through eight phases in order. A phase's exit gate must be green before the next one starts, and the state file records where the work stopped, so a fresh session resumes instead of starting over.</p>
+<figure class="figure" id="figure-phase-machine"><div class="figure-scroll" tabindex="0" role="group" aria-label="Scrollable diagram"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 470" role="img" aria-labelledby="pm-title pm-desc" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif">
+  <title id="pm-title">The repo-revamp phase state machine</title>
+  <desc id="pm-desc">Eight phases in order: INTAKE, SPEC, BUILD, REVIEW, DEPLOY, SEO, SHIP and CLOSE. Each phase box carries its exit gate underneath: RECON.md exists, USER DECISIONS recorded, gate green and draft PR open, V1 to V16 green, live URLs answer, sitemap submitted, merged on the owner's go, tracker and handoff updated. Arrows connect the phases in sequence.</desc>
+  <defs>
+    <marker id="pm-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#3FB950"/>
+    </marker>
+  </defs>
+
+  <text x="20" y="30" fill="#E6EDF3" font-size="19" font-weight="700">The phase state machine</text>
+  <text x="20" y="50" fill="#9FB0C0" font-size="13">A phase's exit gate must be green before the next phase starts.</text>
+
+  <!-- row 1 -->
+  <g>
+    <rect x="20" y="70" width="220" height="96" rx="10" fill="#111821" stroke="#6B7B92" stroke-width="1.5"/>
+    <circle cx="42" cy="94" r="6" fill="#3FB950"/>
+    <text x="58" y="99" fill="#E6EDF3" font-size="17" font-weight="700" font-family="ui-monospace, Consolas, monospace">INTAKE</text>
+    <text x="36" y="130" fill="#9FB0C0" font-size="12" font-family="ui-monospace, Consolas, monospace">phase 0</text>
+    <text x="36" y="150" fill="#9FB0C0" font-size="12">read-only recon</text>
+    <text x="20" y="190" fill="#9FB0C0" font-size="11" letter-spacing="1.2">EXIT GATE</text>
+    <text x="20" y="208" fill="#E6EDF3" font-size="13">RECON.md exists</text>
+  </g>
+  <line x1="240" y1="118" x2="256" y2="118" stroke="#3FB950" stroke-width="2" marker-end="url(#pm-arrow)"/>
+
+  <g>
+    <rect x="260" y="70" width="220" height="96" rx="10" fill="#111821" stroke="#6B7B92" stroke-width="1.5"/>
+    <circle cx="282" cy="94" r="6" fill="#3FB950"/>
+    <text x="298" y="99" fill="#E6EDF3" font-size="17" font-weight="700" font-family="ui-monospace, Consolas, monospace">SPEC</text>
+    <text x="276" y="130" fill="#9FB0C0" font-size="12" font-family="ui-monospace, Consolas, monospace">phase 1</text>
+    <text x="276" y="150" fill="#9FB0C0" font-size="12">numbered questions</text>
+    <text x="260" y="190" fill="#9FB0C0" font-size="11" letter-spacing="1.2">EXIT GATE</text>
+    <text x="260" y="208" fill="#E6EDF3" font-size="13">USER DECISIONS</text>
+    <text x="260" y="224" fill="#E6EDF3" font-size="13">recorded</text>
+  </g>
+  <line x1="480" y1="118" x2="496" y2="118" stroke="#3FB950" stroke-width="2" marker-end="url(#pm-arrow)"/>
+
+  <g>
+    <rect x="500" y="70" width="220" height="96" rx="10" fill="#111821" stroke="#6B7B92" stroke-width="1.5"/>
+    <circle cx="522" cy="94" r="6" fill="#3FB950"/>
+    <text x="538" y="99" fill="#E6EDF3" font-size="17" font-weight="700" font-family="ui-monospace, Consolas, monospace">BUILD</text>
+    <text x="516" y="130" fill="#9FB0C0" font-size="12" font-family="ui-monospace, Consolas, monospace">phase 2</text>
+    <text x="516" y="150" fill="#9FB0C0" font-size="12">one delegated agent</text>
+    <text x="500" y="190" fill="#9FB0C0" font-size="11" letter-spacing="1.2">EXIT GATE</text>
+    <text x="500" y="208" fill="#E6EDF3" font-size="13">gate green,</text>
+    <text x="500" y="224" fill="#E6EDF3" font-size="13">draft PR open</text>
+  </g>
+  <line x1="720" y1="118" x2="736" y2="118" stroke="#3FB950" stroke-width="2" marker-end="url(#pm-arrow)"/>
+
+  <g>
+    <rect x="740" y="70" width="220" height="96" rx="10" fill="#111821" stroke="#6B7B92" stroke-width="1.5"/>
+    <circle cx="762" cy="94" r="6" fill="#3FB950"/>
+    <text x="778" y="99" fill="#E6EDF3" font-size="17" font-weight="700" font-family="ui-monospace, Consolas, monospace">REVIEW</text>
+    <text x="756" y="130" fill="#9FB0C0" font-size="12" font-family="ui-monospace, Consolas, monospace">phase 3</text>
+    <text x="756" y="150" fill="#9FB0C0" font-size="12">the orchestrator verifies</text>
+    <text x="740" y="190" fill="#9FB0C0" font-size="11" letter-spacing="1.2">EXIT GATE</text>
+    <text x="740" y="208" fill="#E6EDF3" font-size="13">V1–V16 green</text>
+  </g>
+
+  <!-- connector from REVIEW down to DEPLOY -->
+  <path d="M 850 166 L 850 236 L 130 236 L 130 258" fill="none" stroke="#3FB950" stroke-width="2" marker-end="url(#pm-arrow)"/>
+  <text x="490" y="228" fill="#9FB0C0" font-size="12" text-anchor="middle">continues</text>
+
+  <!-- row 2 -->
+  <g>
+    <rect x="20" y="270" width="220" height="96" rx="10" fill="#111821" stroke="#6B7B92" stroke-width="1.5"/>
+    <circle cx="42" cy="294" r="6" fill="#3FB950"/>
+    <text x="58" y="299" fill="#E6EDF3" font-size="17" font-weight="700" font-family="ui-monospace, Consolas, monospace">DEPLOY</text>
+    <text x="36" y="330" fill="#9FB0C0" font-size="12" font-family="ui-monospace, Consolas, monospace">phase 4</text>
+    <text x="36" y="350" fill="#9FB0C0" font-size="12">coordinator and owner</text>
+    <text x="20" y="390" fill="#9FB0C0" font-size="11" letter-spacing="1.2">EXIT GATE</text>
+    <text x="20" y="408" fill="#E6EDF3" font-size="13">live URLs answer</text>
+  </g>
+  <line x1="240" y1="318" x2="256" y2="318" stroke="#3FB950" stroke-width="2" marker-end="url(#pm-arrow)"/>
+
+  <g>
+    <rect x="260" y="270" width="220" height="96" rx="10" fill="#111821" stroke="#6B7B92" stroke-width="1.5"/>
+    <circle cx="282" cy="294" r="6" fill="#3FB950"/>
+    <text x="298" y="299" fill="#E6EDF3" font-size="17" font-weight="700" font-family="ui-monospace, Consolas, monospace">SEO</text>
+    <text x="276" y="330" fill="#9FB0C0" font-size="12" font-family="ui-monospace, Consolas, monospace">phase 5</text>
+    <text x="276" y="350" fill="#9FB0C0" font-size="12">sitemap and metadata</text>
+    <text x="260" y="390" fill="#9FB0C0" font-size="11" letter-spacing="1.2">EXIT GATE</text>
+    <text x="260" y="408" fill="#E6EDF3" font-size="13">sitemap submitted</text>
+  </g>
+  <line x1="480" y1="318" x2="496" y2="318" stroke="#3FB950" stroke-width="2" marker-end="url(#pm-arrow)"/>
+
+  <g>
+    <rect x="500" y="270" width="220" height="96" rx="10" fill="#111821" stroke="#6B7B92" stroke-width="1.5"/>
+    <circle cx="522" cy="294" r="6" fill="#3FB950"/>
+    <text x="538" y="299" fill="#E6EDF3" font-size="17" font-weight="700" font-family="ui-monospace, Consolas, monospace">SHIP</text>
+    <text x="516" y="330" fill="#9FB0C0" font-size="12" font-family="ui-monospace, Consolas, monospace">phase 6</text>
+    <text x="516" y="350" fill="#9FB0C0" font-size="12">on the owner's go</text>
+    <text x="500" y="390" fill="#9FB0C0" font-size="11" letter-spacing="1.2">EXIT GATE</text>
+    <text x="500" y="408" fill="#E6EDF3" font-size="13">merged on the</text>
+    <text x="500" y="424" fill="#E6EDF3" font-size="13">owner's go</text>
+  </g>
+  <line x1="720" y1="318" x2="736" y2="318" stroke="#3FB950" stroke-width="2" marker-end="url(#pm-arrow)"/>
+
+  <g>
+    <rect x="740" y="270" width="220" height="96" rx="10" fill="#111821" stroke="#6B7B92" stroke-width="1.5"/>
+    <circle cx="762" cy="294" r="6" fill="#3FB950"/>
+    <text x="778" y="299" fill="#E6EDF3" font-size="17" font-weight="700" font-family="ui-monospace, Consolas, monospace">CLOSE</text>
+    <text x="756" y="330" fill="#9FB0C0" font-size="12" font-family="ui-monospace, Consolas, monospace">phase 7</text>
+    <text x="756" y="350" fill="#9FB0C0" font-size="12">record and hand off</text>
+    <text x="740" y="390" fill="#9FB0C0" font-size="11" letter-spacing="1.2">EXIT GATE</text>
+    <text x="740" y="408" fill="#E6EDF3" font-size="13">tracker and</text>
+    <text x="740" y="424" fill="#E6EDF3" font-size="13">handoff updated</text>
+  </g>
+
+  <!-- legend -->
+  <g>
+    <rect x="20" y="440" width="960" height="1" fill="#6B7B92"/>
+    <circle cx="34" cy="458" r="5" fill="#3FB950"/>
+    <text x="46" y="462" fill="#9FB0C0" font-size="12">phase</text>
+    <rect x="106" y="450" width="16" height="16" rx="3" fill="#111821" stroke="#6B7B92"/>
+    <text x="130" y="462" fill="#9FB0C0" font-size="12">exit gate</text>
+    <line x1="204" y1="458" x2="232" y2="458" stroke="#3FB950" stroke-width="2" marker-end="url(#pm-arrow)"/>
+    <text x="240" y="462" fill="#9FB0C0" font-size="12">next phase</text>
+  </g>
+</svg></div><p class="figure-hint">Scroll the diagram sideways to see all of it.</p><figcaption>The eight phases and the exit gate that closes each one.</figcaption><p class="figure-alt"><span class="figure-alt-label">Text alternative:</span> INTAKE closes when RECON.md exists; SPEC when the owner's USER DECISIONS are recorded; BUILD when the local gate is green and a draft pull request is open; REVIEW when the V1 to V16 checks are green; DEPLOY when the live URLs answer; SEO when the sitemap is submitted; SHIP when the merge happens on the owner's explicit go; CLOSE when the tracker and the handoff are updated.</p></figure>
+<p>The state file is <code>_revamp/&lt;repo&gt;/STATE.md</code>. It holds the phase, the branch, the head, the gates, the open questions and the next action. The <code>revamp-status</code> command prints it in five lines, which is what a resumed session reads first.</p>
+<h2 id="what-the-plugin-ships">What the plugin ships</h2>
+<p>The repository is small on purpose. The depth lives in the reference files, which are read one phase at a time rather than all at once. The skill is the contract; the references carry the detail; the commands start each part of the work; the agents do the delegated work; the scripts verify and inventory.</p>
+<figure class="figure" id="figure-component-map"><div class="figure-scroll" tabindex="0" role="group" aria-label="Scrollable diagram"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 660" role="img" aria-labelledby="cm-title cm-desc" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif">
+  <title id="cm-title">The repo-revamp component map</title>
+  <desc id="cm-desc">The plugin at the centre, surrounded by the parts it ships: one skill, 17 reference files, 7 templates, 5 commands, 3 agents, 3 scripts, the danube-labs marketplace, and the host that serves the generated site. The host is drawn with a dashed border because it is external to the repository.</desc>
+  <defs>
+    <marker id="cm-dot" viewBox="0 0 6 6" refX="3" refY="3" markerWidth="4" markerHeight="4">
+      <circle cx="3" cy="3" r="2" fill="#6B7B92"/>
+    </marker>
+  </defs>
+
+  <text x="20" y="30" fill="#E6EDF3" font-size="19" font-weight="700">What the plugin ships</text>
+  <text x="20" y="50" fill="#9FB0C0" font-size="13">One repository, one marketplace entry, one generated site.</text>
+
+  <!-- connectors -->
+  <g stroke="#6B7B92" stroke-width="1.5" fill="none">
+    <path d="M 225 113 L 360 300"/>
+    <path d="M 480 106 L 480 280"/>
+    <path d="M 735 113 L 600 300"/>
+    <path d="M 750 320 L 600 320"/>
+    <path d="M 735 527 L 600 340"/>
+    <path d="M 480 534 L 480 360"/>
+    <path d="M 225 527 L 360 340"/>
+    <path d="M 210 320 L 360 320"/>
+  </g>
+
+  <!-- centre -->
+  <rect x="360" y="280" width="240" height="80" rx="14" fill="#18212C" stroke="#3FB950" stroke-width="2"/>
+  <text x="480" y="314" fill="#E6EDF3" font-size="21" font-weight="700" text-anchor="middle" font-family="ui-monospace, Consolas, monospace">repo-revamp</text>
+  <text x="480" y="338" fill="#9FB0C0" font-size="13" text-anchor="middle">Claude Code plugin</text>
+
+  <!-- satellites -->
+  <g>
+    <rect x="30" y="70" width="195" height="66" rx="10" fill="#111821" stroke="#6B7B92" stroke-width="1.5"/>
+    <text x="48" y="98" fill="#E6EDF3" font-size="16" font-weight="600">skill</text>
+    <text x="48" y="120" fill="#9FB0C0" font-size="12" font-family="ui-monospace, Consolas, monospace">SKILL.md</text>
+  </g>
+  <g>
+    <rect x="382" y="40" width="196" height="66" rx="10" fill="#111821" stroke="#6B7B92" stroke-width="1.5"/>
+    <text x="400" y="68" fill="#E6EDF3" font-size="16" font-weight="600">17 references</text>
+    <text x="400" y="90" fill="#9FB0C0" font-size="12" font-family="ui-monospace, Consolas, monospace">00 to 16</text>
+  </g>
+  <g>
+    <rect x="735" y="70" width="195" height="66" rx="10" fill="#111821" stroke="#6B7B92" stroke-width="1.5"/>
+    <text x="753" y="98" fill="#E6EDF3" font-size="16" font-weight="600">7 templates</text>
+    <text x="753" y="120" fill="#9FB0C0" font-size="12" font-family="ui-monospace, Consolas, monospace">state, spec, briefs</text>
+  </g>
+  <g>
+    <rect x="750" y="287" width="195" height="66" rx="10" fill="#111821" stroke="#6B7B92" stroke-width="1.5"/>
+    <text x="768" y="315" fill="#E6EDF3" font-size="16" font-weight="600">5 commands</text>
+    <text x="768" y="337" fill="#9FB0C0" font-size="12" font-family="ui-monospace, Consolas, monospace">slash commands</text>
+  </g>
+  <g>
+    <rect x="735" y="494" width="195" height="66" rx="10" fill="#111821" stroke="#6B7B92" stroke-width="1.5"/>
+    <text x="753" y="522" fill="#E6EDF3" font-size="16" font-weight="600">3 agents</text>
+    <text x="753" y="544" fill="#9FB0C0" font-size="12" font-family="ui-monospace, Consolas, monospace">build, recon, verify</text>
+  </g>
+  <g>
+    <rect x="382" y="534" width="196" height="66" rx="10" fill="#111821" stroke="#6B7B92" stroke-width="1.5"/>
+    <text x="400" y="562" fill="#E6EDF3" font-size="16" font-weight="600">3 scripts</text>
+    <text x="400" y="584" fill="#9FB0C0" font-size="12" font-family="ui-monospace, Consolas, monospace">verify, inventory, validate</text>
+  </g>
+  <g>
+    <rect x="30" y="494" width="195" height="66" rx="10" fill="#111821" stroke="#6B7B92" stroke-width="1.5"/>
+    <text x="48" y="522" fill="#E6EDF3" font-size="16" font-weight="600">marketplace</text>
+    <text x="48" y="544" fill="#9FB0C0" font-size="12" font-family="ui-monospace, Consolas, monospace">danube-labs</text>
+  </g>
+  <g>
+    <rect x="15" y="287" width="195" height="66" rx="10" fill="#111821" stroke="#6B7B92" stroke-width="1.5" stroke-dasharray="6 4"/>
+    <text x="33" y="315" fill="#E6EDF3" font-size="16" font-weight="600">host</text>
+    <text x="33" y="337" fill="#9FB0C0" font-size="12" font-family="ui-monospace, Consolas, monospace">GitHub Pages</text>
+  </g>
+
+  <!-- legend -->
+  <g>
+    <rect x="20" y="620" width="920" height="1" fill="#6B7B92"/>
+    <rect x="30" y="632" width="16" height="16" rx="3" fill="#111821" stroke="#6B7B92"/>
+    <text x="54" y="645" fill="#9FB0C0" font-size="12">in the repository</text>
+    <rect x="180" y="632" width="16" height="16" rx="3" fill="#111821" stroke="#6B7B92" stroke-dasharray="4 3"/>
+    <text x="204" y="645" fill="#9FB0C0" font-size="12">external host</text>
+    <line x1="330" y1="640" x2="358" y2="640" stroke="#6B7B92" stroke-width="1.5" marker-end="url(#cm-dot)"/>
+    <text x="366" y="645" fill="#9FB0C0" font-size="12">belongs to the plugin</text>
+  </g>
+</svg></div><p class="figure-hint">Scroll the diagram sideways to see all of it.</p><figcaption>The plugin's parts, and the one external piece: the host that serves the generated site.</figcaption><p class="figure-alt"><span class="figure-alt-label">Text alternative:</span> At the centre is the repo-revamp plugin. Around it: one skill file, seventeen reference files numbered 00 to 16, seven templates for state, spec, briefs, the pull request body, the verify recipe and the managed CLAUDE.md block, five slash commands, three agents for building, recon and verification, three scripts for verification, screenshot inventory and plugin validation, the danube-labs marketplace entry, and the external host, GitHub Pages.</p></figure>
+<ul class="card-grid"><li class="card"><a class="card-link" href="/install/"><span class="card-title">Install</span><span class="card-meta">5 minutes</span><span class="card-text">The one-line install, the marketplace route, the requirements and what a working install looks like.</span></a></li><li class="card"><a class="card-link" href="/quick-start/"><span class="card-title">Quick start</span><span class="card-meta">walkthrough</span><span class="card-text">The first revamp in numbered steps, with the commands and the state file each phase writes.</span></a></li><li class="card"><a class="card-link" href="/phases/"><span class="card-title">Phases</span><span class="card-meta">state machine</span><span class="card-text">The eight phases, their exit gates and the state file that survives a crash.</span></a></li><li class="card"><a class="card-link" href="/gates/"><span class="card-title">Gates</span><span class="card-meta">build</span><span class="card-text">The deterministic builder, the gate list, the secret scan and the CI job that runs the same command.</span></a></li><li class="card"><a class="card-link" href="/screenshots/"><span class="card-title">Screenshots</span><span class="card-meta">pipeline</span><span class="card-text">Inventory, de-duplication, perceptual clustering, review, redaction on a copy, derivatives and a manifest.</span></a></li><li class="card"><a class="card-link" href="/deployment/"><span class="card-title">Deployment</span><span class="card-meta">host</span><span class="card-text">GitHub Pages and Cloudflare Pages, the two DNS postures and the certificate nudge.</span></a></li><li class="card"><a class="card-link" href="/orchestration/"><span class="card-title">Orchestration</span><span class="card-meta">delegation</span><span class="card-text">One implementer, a written brief, progress and handoff files, and lessons that become rules.</span></a></li><li class="card"><a class="card-link" href="/reference/"><span class="card-title">Reference</span><span class="card-meta">generated</span><span class="card-text">Every command, agent, reference, template and script, generated from the real files.</span></a></li></ul>
+<h2 id="a-real-run">A real run</h2>
+<p>The capture below is the output of <code>claude plugin details repo-revamp</code> on a machine where the plugin is installed. It is not a mock: the component inventory and the token estimates come from the installed plugin. The inventory lists six skills: <code>repo-revamp</code> itself and the five commands.</p>
+<figure class="shot"><a class="shot-link" href="/assets/shots/plugin-details.webp"><img src="/assets/shots/plugin-details.webp" alt="Terminal output of claude plugin details repo-revamp, listing version 1.0.1, six skills, three agents, no hooks or MCP servers, and the per-component token estimates." width="1600" height="1075" loading="lazy" decoding="async"></a><figcaption>The installed plugin's own inventory: six skills, three agents, and the token cost it adds to every session.</figcaption></figure>
+<p>The projected token cost is the plugin's always-on cost, not the cost of a revamp. A revamp session reads a few reference files and runs commands; the always-on figure is what every session pays for having the plugin installed.</p>
+<h2 id="verified-quick-facts">Verified quick facts</h2>
+<p>Every number below is computed from the repository by the site builder, not typed by hand. The claims ledger behind this page records the evidence for each one.</p>
+<dl class="facts"><div class="fact"><dt>Version</dt><dd>1.0.1</dd></div><div class="fact"><dt>Licence</dt><dd>MIT</dd></div><div class="fact"><dt>Reference files</dt><dd>17</dd></div><div class="fact"><dt>Templates</dt><dd>7</dd></div><div class="fact"><dt>Commands</dt><dd>5</dd></div><div class="fact"><dt>Agents</dt><dd>3</dd></div><div class="fact"><dt>Scripts</dt><dd>3</dd></div><div class="fact"><dt>Markdown lines</dt><dd>3489</dd></div><div class="fact"><dt>Python lines</dt><dd>637</dd></div><div class="fact"><dt>Requires</dt><dd>Claude Code, git, gh, Python 3.12</dd></div></dl>
+<h2 id="install">Install</h2>
+<p>One command installs the plugin from the marketplace in this repository:</p>
+<figure class="code-block"><figcaption>Claude Code</figcaption><pre><code>/plugin install repo-revamp --marketplace FiredMosquito831/repo-revamp</code></pre></figure>
+<p>Or add the marketplace first and install from it by name. Both routes are in the install guide, together with the requirements and what a working install looks like. Nothing is installed globally, and no configuration file is edited by hand.</p>
+<div class="hero-actions"><a class="btn btn-primary" href="/install/">Install guide</a><a class="btn btn-secondary" href="/quick-start/">Quick start</a></div>
+<h2 id="questions-people-ask-first">Questions people ask first</h2>
+<div class="faq"><details class="faq-item"><summary>Does it change my product code?</summary><div class="faq-answer"><p>No. A presentation-only revamp may change the README, the site, the builder, the requirements file, the site workflow and an append-only <code>.gitignore</code>. The boundary diff must print nothing else, and a product change is a stop-and-report event.</p></div></details><details class="faq-item"><summary>What does it need?</summary><div class="faq-answer"><p>Claude Code with plugin support, <code>git</code>, an authenticated <code>gh</code> for the GitHub steps, and Python 3.12 for the scripts. The screenshot clustering needs Pillow and imagehash in a scratch environment, never in the repository.</p></div></details><details class="faq-item"><summary>What happens when a fact cannot be verified?</summary><div class="faq-answer"><p>It is cut. Every factual statement on a generated page needs a row in the claims ledger with evidence that resolves to a file in the repository. A number that appears in no source is a bug, not a rounding decision.</p></div></details></div>
+<p>The FAQ answers more, including how long a revamp takes, what it costs to run and what it cannot do.</p>
+<div class="hero-actions"><a class="btn btn-secondary" href="/faq/">Read the FAQ</a></div>
+<h2 id="where-to-go-next">Where to go next</h2>
+<ul class="card-grid"><li class="card"><a class="card-link" href="/phases/"><span class="card-title">Phases</span><span class="card-text">What each phase does and what closes it.</span></a></li><li class="card"><a class="card-link" href="/gates/"><span class="card-title">Gates</span><span class="card-text">Why the build is deterministic and what stops it.</span></a></li><li class="card"><a class="card-link" href="/screenshots/"><span class="card-title">Screenshots</span><span class="card-text">How an image earns its place on a page.</span></a></li><li class="card"><a class="card-link" href="/deployment/"><span class="card-title">Deployment</span><span class="card-text">The two hosts and the DNS record that must not be flipped.</span></a></li><li class="card"><a class="card-link" href="/orchestration/"><span class="card-title">Orchestration</span><span class="card-text">How the work is delegated and tracked.</span></a></li><li class="card"><a class="card-link" href="/about/"><span class="card-title">About</span><span class="card-text">Who builds it, what state it is in and the honest limits.</span></a></li></ul>
+    </div>
+  </div>
+</article>
+</main>
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <nav class="footer-nav" aria-label="Footer">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/install/">Install</a></li>
+        <li><a href="/reference/">Reference</a></li>
+        <li><a href="/faq/">FAQ</a></li>
+        <li><a href="/license/">License</a></li>
+        <li><a href="https://github.com/FiredMosquito831/repo-revamp">GitHub</a></li>
+      </ul>
+    </nav>
+    <p class="legal">repo-revamp is an independent project. It is not affiliated with, endorsed by, or sponsored by Anthropic. Claude and Claude Code are trademarks of Anthropic.</p>
+    <p class="legal">Licensed under the MIT License.</p>
+    <p class="legal muted">Copyright 2026 Danube Labs. Built from the plugin's own playbook.</p>
+  </div>
+</footer>
+<script src="/assets/site.js" defer></script>
+</body>
+</html>

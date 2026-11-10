@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reference | repo-revamp</title>
+<meta name="description" content="Every command, agent, reference file, template and script in repo-revamp, generated from the real files at build time with stable anchors and live counts.">
+<link rel="canonical" href="https://reporevamp.danubelabs.net/reference/">
+<meta name="theme-color" content="#0B0F14">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="repo-revamp">
+<meta property="og:title" content="Reference | repo-revamp">
+<meta property="og:description" content="Every command, agent, reference file, template and script in repo-revamp, generated from the real files at build time with stable anchors and live counts.">
+<meta property="og:url" content="https://reporevamp.danubelabs.net/reference/">
+<meta property="og:image" content="https://reporevamp.danubelabs.net/og.png">
+<meta property="og:image:alt" content="repo-revamp: the playbook that turns a repository into a live, documented, search-indexed site.">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Reference | repo-revamp">
+<meta name="twitter:description" content="Every command, agent, reference file, template and script in repo-revamp, generated from the real files at build time with stable anchors and live counts.">
+<meta name="twitter:image" content="https://reporevamp.danubelabs.net/og.png">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Reference","url":"https://reporevamp.danubelabs.net/reference/","description":"Every command, agent, reference file, template and script in repo-revamp, generated from the real files at build time with stable anchors and live counts."}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://reporevamp.danubelabs.net/"},{"@type":"ListItem","position":2,"name":"Reference","item":"https://reporevamp.danubelabs.net/reference/"}]}</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="/">
+      <img class="brand-mark" src="/favicon.svg" alt="repo-revamp" width="30" height="30">
+      <span class="brand-name">repo-revamp</span>
+      <span class="brand-tag">v1.0.1</span>
+    </a>
+    <nav class="site-nav" aria-label="Primary">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/install/">Install</a></li>
+        <li><a href="/quick-start/">Quick start</a></li>
+        <li><a href="/phases/">Phases</a></li>
+        <li><a href="/gates/">Gates</a></li>
+        <li><a href="/screenshots/">Screenshots</a></li>
+        <li><a href="/deployment/">Deployment</a></li>
+        <li><a href="/orchestration/">Orchestration</a></li>
+        <li><a href="/reference/" aria-current="page">Reference</a></li>
+        <li><a href="/faq/">FAQ</a></li>
+        <li><a href="/about/">About</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+<main id="main" class="site-main">
+<article class="page">
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <ol>
+      <li><a href="/">Home</a></li>
+      <li><span aria-current="page">Reference</span></li>
+    </ol>
+  </nav>
+  <header class="page-head">
+    <p class="eyebrow">Generated</p>
+    <h1>Reference</h1>
+    <p class="lead">Every component in the repository, read from the files themselves at build time.</p>
+  </header>
+  <div class="page-grid">
+    <nav class="toc" aria-label="On this page">
+      <p class="toc-title">On this page</p>
+      <ol>
+        <li><a href="#commands">Commands</a></li>
+        <li><a href="#agents">Agents</a></li>
+        <li><a href="#reference-files">Reference files</a></li>
+        <li><a href="#templates">Templates</a></li>
+        <li><a href="#scripts">Scripts</a></li>
+      </ol>
+    </nav>
+    <div class="prose">
+<p>This page is generated at build time from the files in the repository. Every command, agent, reference file, template and script below exists in the tree; the counts are computed by <code>scripts/build_site.py</code>, not typed by hand.</p>
+<h2 id="commands">Commands</h2>
+<p>5 slash commands. Each one loads the skill and drives part of the state machine.</p>
+<ul class="ref-list"><li class="ref-entry" id="ref-command-revamp-batch"><span class="ref-name">revamp-batch</span><span class="ref-desc">Plan and run a batch revamp — one agent per repository, deploys serialised</span><span class="ref-path">commands\revamp-batch.md</span></li><li class="ref-entry" id="ref-command-revamp-deploy"><span class="ref-name">revamp-deploy</span><span class="ref-desc">Walk the deployment for a revamped repository, including the owner-only steps</span><span class="ref-path">commands\revamp-deploy.md</span></li><li class="ref-entry" id="ref-command-revamp-status"><span class="ref-name">revamp-status</span><span class="ref-desc">Show the revamp state — phase, gates, open questions, leftovers</span><span class="ref-path">commands\revamp-status.md</span></li><li class="ref-entry" id="ref-command-revamp-verify"><span class="ref-name">revamp-verify</span><span class="ref-desc">Run the revamp verification recipe against a live site or a local docs directory</span><span class="ref-path">commands\revamp-verify.md</span></li><li class="ref-entry" id="ref-command-revamp"><span class="ref-name">revamp</span><span class="ref-desc">Start or resume a repository revamp — recon, spec, build, deploy, verify</span><span class="ref-path">commands\revamp.md</span></li></ul>
+<h2 id="agents">Agents</h2>
+<p>3 subagents. One builds, one investigates, one verifies.</p>
+<ul class="ref-list"><li class="ref-entry" id="ref-agent-repo-investigator"><span class="ref-name">repo-investigator</span><span class="ref-desc">Read-only investigation for a repository revamp — recon, feature and configuration inventory, hosting and subdomain options, risks, and a numbered spec with a recommendation per question. Use before any build, when the scope or the facts are not yet established.</span><span class="ref-path">agents\repo-investigator.md</span></li><li class="ref-entry" id="ref-agent-revamp-verifier"><span class="ref-name">revamp-verifier</span><span class="ref-desc">Independently verify a completed revamp — the product boundary, the deterministic build, the live URLs, the served commit, the claims ledger and the legal texts — and report CONFIRMED, UNVERIFIED and NOT DONE. Use after an implementer reports shipped, before the orchestrator relays anything.</span><span class="ref-path">agents\revamp-verifier.md</span></li><li class="ref-entry" id="ref-agent-site-builder"><span class="ref-name">site-builder</span><span class="ref-desc">Build the public site for a repository revamp in its own worktree — the generated docs/ site, the deterministic builder, the reviewed screenshot set, the design system, SEO and the README — then commit, push and open a draft PR. Use when a revamp spec is approved and one implementer must build the site. Never merges or deploys.</span><span class="ref-path">agents\site-builder.md</span></li></ul>
+<h2 id="reference-files">Reference files</h2>
+<p>17 reference files, numbered 00 to 16. Each carries the depth for one phase or one concern.</p>
+<ul class="ref-list"><li class="ref-entry" id="ref-reference-00-project-profile"><span class="ref-name">00-project-profile.md</span><span class="ref-desc">00 — The project profile</span><span class="ref-path">skills\repo-revamp\references\00-project-profile.md</span></li><li class="ref-entry" id="ref-reference-01-intake"><span class="ref-name">01-intake.md</span><span class="ref-desc">01 — INTAKE: read-only recon</span><span class="ref-path">skills\repo-revamp\references\01-intake.md</span></li><li class="ref-entry" id="ref-reference-02-spec"><span class="ref-name">02-spec.md</span><span class="ref-desc">02 — SPEC: the numbered questions and the binding decisions</span><span class="ref-path">skills\repo-revamp\references\02-spec.md</span></li><li class="ref-entry" id="ref-reference-03-build"><span class="ref-name">03-build.md</span><span class="ref-desc">03 — BUILD: the page inventory, the build order and the brief</span><span class="ref-path">skills\repo-revamp\references\03-build.md</span></li><li class="ref-entry" id="ref-reference-04-builder"><span class="ref-name">04-builder.md</span><span class="ref-desc">04 — The builder: determinism, gates and CI</span><span class="ref-path">skills\repo-revamp\references\04-builder.md</span></li><li class="ref-entry" id="ref-reference-05-content-truth"><span class="ref-name">05-content-truth.md</span><span class="ref-desc">05 — Content truth: the claims ledger, sourcing and what never gets published</span><span class="ref-path">skills\repo-revamp\references\05-content-truth.md</span></li><li class="ref-entry" id="ref-reference-06-screenshots"><span class="ref-name">06-screenshots.md</span><span class="ref-desc">06 — The screenshot pipeline</span><span class="ref-path">skills\repo-revamp\references\06-screenshots.md</span></li><li class="ref-entry" id="ref-reference-07-design"><span class="ref-name">07-design.md</span><span class="ref-desc">07 — Design: derived from the product, verified by measurement</span><span class="ref-path">skills\repo-revamp\references\07-design.md</span></li><li class="ref-entry" id="ref-reference-08-seo"><span class="ref-name">08-seo.md</span><span class="ref-desc">08 — SEO: metadata, structured data, sitemap and submission</span><span class="ref-path">skills\repo-revamp\references\08-seo.md</span></li><li class="ref-entry" id="ref-reference-09-deployment"><span class="ref-name">09-deployment.md</span><span class="ref-desc">09 — Deployment: GitHub Pages and Cloudflare Pages</span><span class="ref-path">skills\repo-revamp\references\09-deployment.md</span></li><li class="ref-entry" id="ref-reference-10-pr-and-merge"><span class="ref-name">10-pr-and-merge.md</span><span class="ref-desc">10 — PR, merge and the revert</span><span class="ref-path">skills\repo-revamp\references\10-pr-and-merge.md</span></li><li class="ref-entry" id="ref-reference-11-verification"><span class="ref-name">11-verification.md</span><span class="ref-desc">11 — Verification: the recipe the orchestrator runs itself</span><span class="ref-path">skills\repo-revamp\references\11-verification.md</span></li><li class="ref-entry" id="ref-reference-12-orchestration"><span class="ref-name">12-orchestration.md</span><span class="ref-desc">12 — Orchestration: delegation, tracking, handoff and lessons</span><span class="ref-path">skills\repo-revamp\references\12-orchestration.md</span></li><li class="ref-entry" id="ref-reference-13-batch-mode"><span class="ref-name">13-batch-mode.md</span><span class="ref-desc">13 — Batch mode: several repositories at once</span><span class="ref-path">skills\repo-revamp\references\13-batch-mode.md</span></li><li class="ref-entry" id="ref-reference-14-pitfalls"><span class="ref-name">14-pitfalls.md</span><span class="ref-desc">14 — Pitfalls: every trap that bit, with its fix</span><span class="ref-path">skills\repo-revamp\references\14-pitfalls.md</span></li><li class="ref-entry" id="ref-reference-15-private-repos"><span class="ref-name">15-private-repos.md</span><span class="ref-desc">15 — Private repositories: a public site without publishing the source</span><span class="ref-path">skills\repo-revamp\references\15-private-repos.md</span></li><li class="ref-entry" id="ref-reference-16-maintenance"><span class="ref-name">16-maintenance.md</span><span class="ref-desc">16 — Maintenance after launch</span><span class="ref-path">skills\repo-revamp\references\16-maintenance.md</span></li></ul>
+<h2 id="templates">Templates</h2>
+<p>7 templates. They are the written artifacts the playbook produces: state, spec, both briefs, the PR body, the verify recipe and the managed CLAUDE.md block.</p>
+<ul class="ref-list"><li class="ref-entry" id="ref-template-brief-investigator-template"><span class="ref-name">BRIEF-INVESTIGATOR.template.md</span><span class="ref-desc">You are a READ-ONLY investigator for <code>repo</code> (<code>owner/repo</code>). Deliverable: <code>_revamp/repo/INVESTIGATION-TOPIC.md</code> per `references/templates/SPEC.templat…</span><span class="ref-path">skills\repo-revamp\references\templates\BRIEF-INVESTIGATOR.template.md</span></li><li class="ref-entry" id="ref-template-brief-site-builder-template"><span class="ref-name">BRIEF-SITE-BUILDER.template.md</span><span class="ref-desc">You are the SOLE implementer of the public site for <code>repo</code> (<code>owner/repo</code>), repository <code>visibility</code>, default branch <code>default</code>, base SHA <code>sha</code>. ONE bra…</span><span class="ref-path">skills\repo-revamp\references\templates\BRIEF-SITE-BUILDER.template.md</span></li><li class="ref-entry" id="ref-template-claude-md-block-template"><span class="ref-name">CLAUDE-MD-BLOCK.template.md</span><span class="ref-desc">How we revamp repositories</span><span class="ref-path">skills\repo-revamp\references\templates\CLAUDE-MD-BLOCK.template.md</span></li><li class="ref-entry" id="ref-template-pr-body-template"><span class="ref-name">PR-BODY.template.md</span><span class="ref-desc">Specific title: what this PR adds</span><span class="ref-path">skills\repo-revamp\references\templates\PR-BODY.template.md</span></li><li class="ref-entry" id="ref-template-spec-template"><span class="ref-name">SPEC.template.md</span><span class="ref-desc">SPEC — Product: what this job is</span><span class="ref-path">skills\repo-revamp\references\templates\SPEC.template.md</span></li><li class="ref-entry" id="ref-template-state-template"><span class="ref-name">STATE.template.md</span><span class="ref-desc">STATE — repo</span><span class="ref-path">skills\repo-revamp\references\templates\STATE.template.md</span></li><li class="ref-entry" id="ref-template-verify-recipe-template"><span class="ref-name">VERIFY-RECIPE.template.md</span><span class="ref-desc">The verify recipe — run after every "shipped" report, before relaying</span><span class="ref-path">skills\repo-revamp\references\templates\VERIFY-RECIPE.template.md</span></li></ul>
+<h2 id="scripts">Scripts</h2>
+<p>4 Python files in <code>scripts/</code>. 3 are the plugin's tools; <code>build_site.py</code> is the generator that builds this site.</p>
+<ul class="ref-list"><li class="ref-entry" id="ref-script-build-site"><span class="ref-name">build_site.py</span><span class="ref-desc">Build the repo-revamp documentation site into docs/.</span><span class="ref-path">scripts\build_site.py</span></li><li class="ref-entry" id="ref-script-shots-inventory"><span class="ref-name">shots_inventory.py</span><span class="ref-desc">Inventory, de-duplicate and contact-sheet the screenshots of a repository.</span><span class="ref-path">scripts\shots_inventory.py</span></li><li class="ref-entry" id="ref-script-validate-plugin"><span class="ref-name">validate_plugin.py</span><span class="ref-desc">Validate the plugin repository before publishing.</span><span class="ref-path">scripts\validate_plugin.py</span></li><li class="ref-entry" id="ref-script-verify-site"><span class="ref-name">verify_site.py</span><span class="ref-desc">Verify a revamped site: live or local.</span><span class="ref-path">scripts\verify_site.py</span></li></ul>
+    </div>
+  </div>
+</article>
+</main>
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <nav class="footer-nav" aria-label="Footer">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/install/">Install</a></li>
+        <li><a href="/reference/">Reference</a></li>
+        <li><a href="/faq/">FAQ</a></li>
+        <li><a href="/license/">License</a></li>
+        <li><a href="https://github.com/FiredMosquito831/repo-revamp">GitHub</a></li>
+      </ul>
+    </nav>
+    <p class="legal">repo-revamp is an independent project. It is not affiliated with, endorsed by, or sponsored by Anthropic. Claude and Claude Code are trademarks of Anthropic.</p>
+    <p class="legal">Licensed under the MIT License.</p>
+    <p class="legal muted">Copyright 2026 Danube Labs. Built from the plugin's own playbook.</p>
+  </div>
+</footer>
+<script src="/assets/site.js" defer></script>
+</body>
+</html>
