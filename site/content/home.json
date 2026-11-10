@@ -39,7 +39,7 @@
       "type": "figure",
       "diagram": "component-map",
       "caption": "The plugin's parts, and the one external piece: the host that serves the generated site.",
-      "text_alt": "At the centre is the repo-revamp plugin. Around it: one skill file, seventeen reference files numbered 00 to 16, seven templates for state, spec, briefs, the pull request body, the verify recipe and the managed CLAUDE.md block, five slash commands, three agents for building, recon and verification, three scripts for verification, screenshot inventory and plugin validation, the danube-labs marketplace entry, and the external host, GitHub Pages."
+      "text_alt": "At the centre is the repo-revamp plugin. Around it: one skill file, {{ references }} reference files numbered 00 to 16, {{ templates }} templates for state, spec, briefs, the pull request body, the verify recipe and the managed CLAUDE.md block, {{ commands }} slash commands, {{ agents }} agents for building, recon and verification, {{ plugin_scripts }} scripts for verification, screenshot inventory and plugin validation, the danube-labs marketplace entry, and the external host, GitHub Pages."
     },
     {
       "type": "cards",
