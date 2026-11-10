@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ page.title }}</title>
+<meta name="description" content="{{ page.description }}">
+<link rel="canonical" href="{{ site.url }}{{ page.path }}">
+<meta name="theme-color" content="{{ tokens.color.bg }}">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="{{ site.name }}">
+<meta property="og:title" content="{{ page.title }}">
+<meta property="og:description" content="{{ page.description }}">
+<meta property="og:url" content="{{ site.url }}{{ page.path }}">
+<meta property="og:image" content="{{ site.url }}/og.png">
+<meta property="og:image:alt" content="{{ og_alt }}">
+<meta property="og:locale" content="{{ site.locale }}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ page.title }}">
+<meta name="twitter:description" content="{{ page.description }}">
+<meta name="twitter:image" content="{{ site.url }}/og.png">
+{% if page.get("noindex") %}<meta name="robots" content="noindex">{% endif %}
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/style.css">
+{% for block in jsonld %}
+<script type="application/ld+json">{{ block | safe }}</script>
+{% endfor %}
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="/">
+      <img class="brand-mark" src="/favicon.svg" alt="repo-revamp" width="30" height="30">
+      <span class="brand-name">repo-revamp</span>
+      <span class="brand-tag">v{{ stats.version }}</span>
+    </a>
+    <nav class="site-nav" aria-label="Primary">
+      <ul>
+{% for item in site.nav %}
+        <li><a href="{{ item.path }}"{% if item.path == page.path %} aria-current="page"{% endif %}>{{ item.label }}</a></li>
+{% endfor %}
+      </ul>
+    </nav>
+  </div>
+</header>
+<main id="main" class="site-main">
+{% block content %}{% endblock %}
+</main>
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <nav class="footer-nav" aria-label="Footer">
+      <ul>
+{% for item in site.footer %}
+        <li><a href="{{ item.path }}">{{ item.label }}</a></li>
+{% endfor %}
+      </ul>
+    </nav>
+    <p class="legal">{{ site.legal.non_affiliation }}</p>
+    <p class="legal">{{ site.legal.license }}</p>
+    <p class="legal muted">Copyright 2026 {{ site.author.name }}. Built from the plugin's own playbook.</p>
+  </div>
+</footer>
+<script src="/assets/site.js" defer></script>
+</body>
+</html>
