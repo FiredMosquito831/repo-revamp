@@ -1,0 +1,82 @@
+{
+  "slug": "orchestration",
+  "path": "/orchestration/",
+  "nav": "Orchestration",
+  "nav_order": 8,
+  "title": "Orchestration | repo-revamp",
+  "description": "How a revamp is delegated: one implementer, a written brief, progress and handoff files, tracking at every boundary and lessons that become rules.",
+  "h1": "Orchestration",
+  "eyebrow": "Process",
+  "lead": "The orchestrator does not build the site. It reconnoitres, writes the spec and the brief, verifies the result, deploys and reports. The context it protects is the context that catches mistakes.",
+  "priority": "0.7",
+  "words": [800, 1200],
+  "toc": true,
+  "sections": [
+    { "type": "p", "text": "A revamp has four roles, and the separation is the point. The owner decides and clicks the steps only an owner can click. The orchestrator investigates, specifies, verifies, deploys and reports. One implementer builds. A read-only investigator may run beside it." },
+    {
+      "type": "table",
+      "caption": "Who does what",
+      "head": ["Role", "Does", "Never does"],
+      "rows": [
+        ["Owner", "Decides, approves, performs the owner-only steps, says merge", "—"],
+        ["Orchestrator", "Recon, spec, briefs, verification, deployment, merge, reporting, tracking", "Builds the site itself, merges without a go"],
+        ["Implementer", "Builds in a worktree, commits, pushes, opens the draft pull request", "Merges, deploys, touches DNS or settings, edits the tracking files"],
+        ["Investigator", "Read-only research and a spec", "Commits, edits outside its scratch and the spec"]
+      ]
+    },
+    { "type": "h2", "text": "The loop" },
+    { "type": "p", "text": "Re-anchor, recon, spec, owner answers, one implementer, the agent ships the branch and the draft pull request, verify, deploy on the go, report, record. The loop is deliberately boring. Every step that could be skipped is a step that has produced a wrong site before." },
+    { "type": "h2", "text": "Concurrency" },
+    { "type": "p", "text": "For a single repository, at most two agents run: one implementer and, beside it, read-only investigators. For a batch, one agent per repository, launched together, with the coordinator deploying one repository at a time. Never two agents on one repository, never two agents touching the same DNS zone or the same Cloudflare account at once, and one production pull request at a time per repository." },
+    { "type": "h2", "text": "The brief" },
+    { "type": "p", "text": "A brief is a spec, not a summary. It carries the role line, the spec path and the binding decisions with their timestamp, the repository facts, the numbered scope and an explicit not-in-scope list, the hard rules, the verification bar, the ship sequence, the progress files and the report format." },
+    { "type": "p", "text": "An agent that has to guess will guess wrong. The brief names the frozen paths, the forbidden reads, the secret rules and the exact commands that count as proof. The template is `BRIEF-SITE-BUILDER.template.md`." },
+    { "type": "h2", "text": "Progress and handoff" },
+    { "type": "p", "text": "Every agent keeps `PROGRESS.md` and `HANDOFF.md` in its worktree from the first edit and commits work in progress early. If the agent is killed by a limit or a crash, the on-disk state is the resume point. If a resume fails outright, a fresh agent gets the complete brief; the work is not re-derived from memory." },
+    { "type": "p", "text": "The handoff has seven parts: the read order, the state with what is confirmed, the remaining queue in order, what the owner still owes, the lessons of the arc, the verify commands for the next session, and the environment facts." },
+    { "type": "h2", "text": "Tracking" },
+    { "type": "p", "text": "Three files are updated at every boundary. The state file is the live state machine. The queue lists every item with its status: running, queued, finished or held. The handoff is written before every pause or compaction." },
+    { "type": "p", "text": "When the project uses the working-notes skill, its queue is the queue and its handoff is the handoff. The revamp does not duplicate tracking; it uses the project's own." },
+    { "type": "h2", "text": "Lessons" },
+    { "type": "p", "text": "A lesson qualifies when it is one of five things: a wrong premise that cost time, an agent slip that a rule now forbids, a trap of the machine or the vendor that bit once, a false positive or false negative, or a measurement that overturned an assumption." },
+    { "type": "p", "text": "It is written as the lesson first, then the evidence that makes it memorable: the number, the row, the error text. Then its origin: date, pull request, repository. Duplicates are merged by adding the new origin. The rule that follows goes into the normative file the same day; the lesson keeps the why, the normative file keeps the what." },
+    { "type": "h2", "text": "Context discipline" },
+    { "type": "p", "text": "The orchestrator does not run investigations beyond a re-anchor; it delegates them. It takes conclusions, not file dumps. A subagent's report is a summary, so the claims that matter are verified rather than relayed. When the context approaches its limit, the handoff is written first and the session compacts second." },
+    { "type": "h2", "text": "What goes wrong, and the counter-measure" },
+    {
+      "type": "table",
+      "caption": "The failure modes the playbook was written against",
+      "head": ["Failure", "Counter-measure"],
+      "rows": [
+        ["Silence", "The brief says the final message is the deliverable; partial is acceptable, silence is not."],
+        ["A kill from a limit or a crash", "Progress and handoff files from the first edit, work in progress committed early."],
+        ["A resume that fails", "Spawn a fresh agent with the complete brief; do not re-derive the work."],
+        ["Waiting or polling forever", "Bounded loops with timeouts only; no foreground sleep over ten minutes."],
+        ["Wrong claims", "Budget half of an agent's findings to be wrong; check every file and line."],
+        ["Writing to the wrong file", "Briefs forbid editing the tracking files."],
+        ["A relative worktree path", "Absolute paths in every brief."]
+      ]
+    },
+    { "type": "callout", "tone": "info", "title": "The orchestrator verifies itself", "text": "An agent's report is a summary, and a summary is a hypothesis. The orchestrator runs the recipe, looks at a screenshot, reads the deviations and reports CONFIRMED, UNVERIFIED and NOT DONE separately." },
+    {
+      "type": "cta",
+      "items": [
+        { "label": "The phases", "href": "/phases/", "style": "secondary" },
+        { "label": "The reference", "href": "/reference/", "style": "primary" }
+      ]
+    }
+  ],
+  "claims": [
+    { "claim": "The four roles are owner, orchestrator, implementer and investigator.", "evidence": "skills/repo-revamp/references/12-orchestration.md", "status": "verified" },
+    { "claim": "The orchestrator does not build the site itself.", "evidence": "skills/repo-revamp/SKILL.md", "status": "verified" },
+    { "claim": "Single-repository work allows at most two agents, one of them the implementer.", "evidence": "skills/repo-revamp/references/12-orchestration.md", "status": "verified" },
+    { "claim": "Batch work runs one agent per repository and deploys one repository at a time.", "evidence": "skills/repo-revamp/references/12-orchestration.md; skills/repo-revamp/references/13-batch-mode.md", "status": "verified" },
+    { "claim": "A brief carries the role, spec path, decisions, repository facts, scope, hard rules, verification bar, ship sequence, progress files and report format.", "evidence": "skills/repo-revamp/references/12-orchestration.md", "status": "verified" },
+    { "claim": "Every agent keeps PROGRESS.md and HANDOFF.md in its worktree from the first edit.", "evidence": "skills/repo-revamp/SKILL.md; skills/repo-revamp/references/12-orchestration.md", "status": "verified" },
+    { "claim": "The handoff has seven parts.", "evidence": "skills/repo-revamp/references/12-orchestration.md", "status": "verified" },
+    { "claim": "Tracking uses a state file, a queue and a handoff, updated at every boundary.", "evidence": "skills/repo-revamp/references/12-orchestration.md", "status": "verified" },
+    { "claim": "A lesson is written as the lesson first, then its evidence, then its origin.", "evidence": "skills/repo-revamp/references/12-orchestration.md", "status": "verified" },
+    { "claim": "The failure modes include silence, kills, failed resumes, unbounded polling, wrong claims, wrong-file edits and relative worktree paths.", "evidence": "skills/repo-revamp/references/12-orchestration.md", "status": "verified" },
+    { "claim": "The brief template is BRIEF-SITE-BUILDER.template.md.", "evidence": "skills/repo-revamp/references/templates/BRIEF-SITE-BUILDER.template.md", "status": "verified" }
+  ]
+}

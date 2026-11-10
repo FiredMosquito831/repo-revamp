@@ -1,0 +1,79 @@
+{
+  "slug": "install",
+  "path": "/install/",
+  "nav": "Install",
+  "nav_order": 2,
+  "title": "Install | repo-revamp",
+  "description": "Install repo-revamp in Claude Code with one marketplace command or two steps, check the requirements, and know what a working install looks like.",
+  "h1": "Install repo-revamp",
+  "eyebrow": "Setup",
+  "lead": "One command, or two if you prefer to add the marketplace first. Nothing is installed globally and no configuration file is edited by hand.",
+  "priority": "0.9",
+  "words": [500, 800],
+  "toc": true,
+  "sections": [
+    { "type": "h2", "text": "The one-line install" },
+    { "type": "p", "text": "The repository is its own marketplace, so one command installs the plugin and registers the marketplace it comes from:" },
+    { "type": "code", "label": "Claude Code", "text": "/plugin install repo-revamp --marketplace FiredMosquito831/repo-revamp" },
+    { "type": "p", "text": "Run it inside Claude Code. The plugin is fetched from the public repository, and the five commands and three agents become available in the session." },
+    { "type": "h2", "text": "The marketplace route" },
+    { "type": "p", "text": "If you want the marketplace registered on its own, add it first and install from it by name:" },
+    { "type": "code", "label": "Claude Code", "text": "/plugin marketplace add FiredMosquito831/repo-revamp\n/plugin install repo-revamp@danube-labs" },
+    { "type": "p", "text": "The marketplace is called `danube-labs`. It lists one plugin, `repo-revamp`, whose source is the repository root." },
+    { "type": "p", "text": "From a local clone, point the marketplace at the checkout instead of the repository name:" },
+    { "type": "code", "label": "Claude Code", "text": "/plugin marketplace add /absolute/path/to/repo-revamp\n/plugin install repo-revamp@danube-labs" },
+    { "type": "h2", "text": "Requirements" },
+    {
+      "type": "table",
+      "caption": "What the plugin needs, and what each piece is for",
+      "head": ["Requirement", "Why"],
+      "rows": [
+        ["Claude Code with plugin support", "Loads the skill, the commands and the agents."],
+        ["git", "The revamp works in a worktree and commits to a branch."],
+        ["gh, authenticated", "The GitHub steps: pull requests, Pages, repository metadata."],
+        ["Python 3.12", "Runs the builder and the three plugin scripts."],
+        ["Pillow and imagehash, in a scratch environment", "Only for perceptual clustering and contact sheets. The inventory and SHA-256 de-duplication use the standard library."]
+      ]
+    },
+    { "type": "p", "text": "Nothing else is required. The builder needs Jinja2 and MarkupSafe, pinned in the site's own requirements file; the plugin's install does not add them to any product manifest." },
+    { "type": "h2", "text": "What a working install looks like" },
+    { "type": "p", "text": "The plugin validates itself before anything is published. The capture below is the real output of `claude plugin validate . --strict` in a checkout of this repository. Paths are replaced with `<repo>`; the text is otherwise exact." },
+    { "type": "shot", "slug": "plugin-validate" },
+    { "type": "p", "text": "A second check runs the repository's own validator and prints one line per component. It is the check the CI workflow runs on every push." },
+    { "type": "shot", "slug": "plugin-self-check" },
+    { "type": "p", "text": "After a restart, `claude plugin details repo-revamp` should list the six skills, the three agents and no hooks, MCP servers or LSP servers." },
+    { "type": "h2", "text": "What \"installed\" means" },
+    { "type": "p", "text": "After a restart the plugin contributes four things to a session: the `repo-revamp` skill, which is model-invocable, so saying \"revamp this repo\" loads it; five slash commands under the `repo-revamp` prefix; three subagents that the skill can delegate to; and the working files the playbook writes outside the repository. It adds no hooks, no MCP servers and no LSP servers." },
+    { "type": "p", "text": "The skill is the contract and the state machine. The commands are entry points into it. The agents are the delegated workers. Nothing runs until you ask for a revamp, and nothing in your repositories changes until a revamp command starts." },
+    { "type": "h2", "text": "Update and uninstall" },
+    { "type": "p", "text": "Updates come from the marketplace. Refresh the marketplace and reinstall the plugin; the version in `.claude-plugin/plugin.json` is the only place the version is declared." },
+    { "type": "code", "label": "Claude Code", "text": "/plugin marketplace update danube-labs\n/plugin update repo-revamp@danube-labs" },
+    { "type": "p", "text": "To remove it, uninstall the plugin and, if you added it only for this, remove the marketplace:" },
+    { "type": "code", "label": "Claude Code", "text": "/plugin uninstall repo-revamp@danube-labs\n/plugin marketplace remove danube-labs" },
+    { "type": "callout", "tone": "info", "title": "The plugin does not touch your repositories", "text": "Installing it adds a skill, five commands and three agents to Claude Code. It does not clone, edit or configure any repository until you run a revamp command on one." },
+    { "type": "h2", "text": "Next" },
+    { "type": "p", "text": "With the plugin installed, the quick start walks through a first revamp and the reference lists every command, agent, reference file, template and script." },
+    {
+      "type": "cta",
+      "items": [
+        { "label": "Quick start", "href": "/quick-start/", "style": "primary" },
+        { "label": "Reference", "href": "/reference/", "style": "secondary" }
+      ]
+    }
+  ],
+  "claims": [
+    { "claim": "The repository is its own marketplace.", "evidence": ".claude-plugin/marketplace.json", "status": "verified" },
+    { "claim": "The one-line install is /plugin install repo-revamp --marketplace FiredMosquito831/repo-revamp.", "evidence": "README.md", "status": "verified" },
+    { "claim": "The marketplace route is /plugin marketplace add FiredMosquito831/repo-revamp then /plugin install repo-revamp@danube-labs.", "evidence": "README.md", "status": "verified" },
+    { "claim": "The marketplace is named danube-labs and lists one plugin.", "evidence": ".claude-plugin/marketplace.json", "status": "verified" },
+    { "claim": "The plugin's source is the repository root.", "evidence": ".claude-plugin/marketplace.json", "status": "verified" },
+    { "claim": "A local clone can be registered as a marketplace by absolute path.", "evidence": "README.md", "status": "verified" },
+    { "claim": "The requirements are Claude Code with plugin support, git, gh and Python 3.12.", "evidence": "README.md", "status": "verified" },
+    { "claim": "Pillow and imagehash are needed only for clustering and contact sheets.", "evidence": "README.md", "status": "verified" },
+    { "claim": "The builder needs Jinja2 and MarkupSafe, pinned in requirements-site.txt.", "evidence": "requirements-site.txt", "status": "verified" },
+    { "claim": "claude plugin validate . --strict passes on this repository.", "evidence": "site/shots/manifest.json", "status": "verified" },
+    { "claim": "The repository validator prints one PASS line per component and runs in CI.", "evidence": "scripts/validate_plugin.py; .github/workflows/validate.yml", "status": "verified" },
+    { "claim": "The installed plugin lists six skills, three agents and no hooks, MCP servers or LSP servers.", "evidence": "site/shots/manifest.json", "status": "verified" },
+    { "claim": "The plugin version is declared only in .claude-plugin/plugin.json.", "evidence": ".claude-plugin/plugin.json; CHANGELOG.md", "status": "verified" }
+  ]
+}

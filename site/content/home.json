@@ -1,0 +1,133 @@
+{
+  "slug": "home",
+  "path": "/",
+  "nav": "Home",
+  "nav_order": 1,
+  "title": "repo-revamp — the repository revamp playbook",
+  "description": "A Claude Code plugin that turns a repository into a live, documented, search-indexed site: phases, gates, screenshots, SEO, deployment and verification.",
+  "h1": "Turn a repository into a live, documented, search-indexed site.",
+  "eyebrow": "Claude Code plugin",
+  "lead": "repo-revamp is the playbook that takes a GitHub repository from \"here is an old repo\" to a verified public site, without changing the product.",
+  "priority": "1.0",
+  "words": [1200, 1800],
+  "toc": true,
+  "sections": [
+    {
+      "type": "cta",
+      "items": [
+        { "label": "Install", "href": "/install/", "style": "primary" },
+        { "label": "Quick start", "href": "/quick-start/", "style": "secondary" },
+        { "label": "Read the source", "href": "https://github.com/FiredMosquito831/repo-revamp", "style": "secondary" }
+      ]
+    },
+    { "type": "h2", "text": "What it does" },
+    { "type": "p", "text": "Most repositories are judged in the first minute: by the README, by the demo, by whether a search engine can find them at all. A revamp fixes that surface. It is also the kind of work that quietly breaks things, because the person doing it is editing the same repository the product lives in." },
+    { "type": "p", "text": "repo-revamp turns the work into a playbook with a state machine. A read-only recon establishes the facts. A numbered spec asks the owner the decisions that matter, one recommendation per question. One delegated agent builds a generated site in `docs/` behind a deterministic builder and a set of hard gates. The orchestrator verifies every claim itself, deploys on the owner's go, and records what it learned." },
+    { "type": "p", "text": "The product is frozen throughout. A presentation-only revamp may change the README, the site, the builder, the requirements file, the site workflow and an append-only `.gitignore`. A boundary diff proves it: if the diff prints a product path, the pull request is out of scope." },
+    { "type": "h2", "text": "The phase state machine" },
+    { "type": "p", "text": "Every revamp moves through eight phases in order. A phase's exit gate must be green before the next one starts, and the state file records where the work stopped, so a fresh session resumes instead of starting over." },
+    {
+      "type": "figure",
+      "diagram": "phase-machine",
+      "caption": "The eight phases and the exit gate that closes each one.",
+      "text_alt": "INTAKE closes when RECON.md exists; SPEC when the owner's USER DECISIONS are recorded; BUILD when the local gate is green and a draft pull request is open; REVIEW when the V1 to V16 checks are green; DEPLOY when the live URLs answer; SEO when the sitemap is submitted; SHIP when the merge happens on the owner's explicit go; CLOSE when the tracker and the handoff are updated."
+    },
+    { "type": "p", "text": "The state file is `_revamp/<repo>/STATE.md`. It holds the phase, the branch, the head, the gates, the open questions and the next action. The `revamp-status` command prints it in five lines, which is what a resumed session reads first." },
+    { "type": "h2", "text": "What the plugin ships" },
+    { "type": "p", "text": "The repository is small on purpose. The depth lives in the reference files, which are read one phase at a time rather than all at once. The skill is the contract; the references carry the detail; the commands start each part of the work; the agents do the delegated work; the scripts verify and inventory." },
+    {
+      "type": "figure",
+      "diagram": "component-map",
+      "caption": "The plugin's parts, and the one external piece: the host that serves the generated site.",
+      "text_alt": "At the centre is the repo-revamp plugin. Around it: one skill file, seventeen reference files numbered 00 to 16, seven templates for state, spec, briefs, the pull request body, the verify recipe and the managed CLAUDE.md block, five slash commands, three agents for building, recon and verification, three scripts for verification, screenshot inventory and plugin validation, the danube-labs marketplace entry, and the external host, GitHub Pages."
+    },
+    {
+      "type": "cards",
+      "cards": [
+        { "title": "Install", "text": "The one-line install, the marketplace route, the requirements and what a working install looks like.", "href": "/install/", "meta": "5 minutes" },
+        { "title": "Quick start", "text": "The first revamp in numbered steps, with the commands and the state file each phase writes.", "href": "/quick-start/", "meta": "walkthrough" },
+        { "title": "Phases", "text": "The eight phases, their exit gates and the state file that survives a crash.", "href": "/phases/", "meta": "state machine" },
+        { "title": "Gates", "text": "The deterministic builder, the gate list, the secret scan and the CI job that runs the same command.", "href": "/gates/", "meta": "build" },
+        { "title": "Screenshots", "text": "Inventory, de-duplication, perceptual clustering, review, redaction on a copy, derivatives and a manifest.", "href": "/screenshots/", "meta": "pipeline" },
+        { "title": "Deployment", "text": "GitHub Pages and Cloudflare Pages, the two DNS postures and the certificate nudge.", "href": "/deployment/", "meta": "host" },
+        { "title": "Orchestration", "text": "One implementer, a written brief, progress and handoff files, and lessons that become rules.", "href": "/orchestration/", "meta": "delegation" },
+        { "title": "Reference", "text": "Every command, agent, reference, template and script, generated from the real files.", "href": "/reference/", "meta": "generated" }
+      ]
+    },
+    { "type": "h2", "text": "A real run" },
+    { "type": "p", "text": "The capture below is the output of `claude plugin details repo-revamp` on a machine where the plugin is installed. It is not a mock: the component inventory and the token estimates come from the installed plugin. The inventory lists six skills: `repo-revamp` itself and the five commands." },
+    { "type": "shot", "slug": "plugin-details" },
+    { "type": "p", "text": "The projected token cost is the plugin's always-on cost, not the cost of a revamp. A revamp session reads a few reference files and runs commands; the always-on figure is what every session pays for having the plugin installed." },
+    { "type": "h2", "text": "Verified quick facts" },
+    { "type": "p", "text": "Every number below is computed from the repository by the site builder, not typed by hand. The claims ledger behind this page records the evidence for each one." },
+    {
+      "type": "facts",
+      "items": [
+        { "label": "Version", "value": "{{ version }}" },
+        { "label": "Licence", "value": "{{ license }}" },
+        { "label": "Reference files", "value": "{{ references }}" },
+        { "label": "Templates", "value": "{{ templates }}" },
+        { "label": "Commands", "value": "{{ commands }}" },
+        { "label": "Agents", "value": "{{ agents }}" },
+        { "label": "Scripts", "value": "{{ plugin_scripts }}" },
+        { "label": "Markdown lines", "value": "{{ markdown_lines }}" },
+        { "label": "Python lines", "value": "{{ python_lines }}" },
+        { "label": "Requires", "value": "Claude Code, git, gh, Python 3.12" }
+      ]
+    },
+    { "type": "h2", "text": "Install" },
+    { "type": "p", "text": "One command installs the plugin from the marketplace in this repository:" },
+    { "type": "code", "label": "Claude Code", "text": "/plugin install repo-revamp --marketplace FiredMosquito831/repo-revamp" },
+    { "type": "p", "text": "Or add the marketplace first and install from it by name. Both routes are in the install guide, together with the requirements and what a working install looks like. Nothing is installed globally, and no configuration file is edited by hand." },
+    {
+      "type": "cta",
+      "items": [
+        { "label": "Install guide", "href": "/install/", "style": "primary" },
+        { "label": "Quick start", "href": "/quick-start/", "style": "secondary" }
+      ]
+    },
+    { "type": "h2", "text": "Questions people ask first" },
+    {
+      "type": "faq",
+      "items": [
+        { "q": "Does it change my product code?", "a": "No. A presentation-only revamp may change the README, the site, the builder, the requirements file, the site workflow and an append-only `.gitignore`. The boundary diff must print nothing else, and a product change is a stop-and-report event." },
+        { "q": "What does it need?", "a": "Claude Code with plugin support, `git`, an authenticated `gh` for the GitHub steps, and Python 3.12 for the scripts. The screenshot clustering needs Pillow and imagehash in a scratch environment, never in the repository." },
+        { "q": "What happens when a fact cannot be verified?", "a": "It is cut. Every factual statement on a generated page needs a row in the claims ledger with evidence that resolves to a file in the repository. A number that appears in no source is a bug, not a rounding decision." }
+      ]
+    },
+    { "type": "p", "text": "The FAQ answers more, including how long a revamp takes, what it costs to run and what it cannot do." },
+    { "type": "cta", "items": [{ "label": "Read the FAQ", "href": "/faq/", "style": "secondary" }] },
+    { "type": "h2", "text": "Where to go next" },
+    {
+      "type": "cards",
+      "cards": [
+        { "title": "Phases", "text": "What each phase does and what closes it.", "href": "/phases/" },
+        { "title": "Gates", "text": "Why the build is deterministic and what stops it.", "href": "/gates/" },
+        { "title": "Screenshots", "text": "How an image earns its place on a page.", "href": "/screenshots/" },
+        { "title": "Deployment", "text": "The two hosts and the DNS record that must not be flipped.", "href": "/deployment/" },
+        { "title": "Orchestration", "text": "How the work is delegated and tracked.", "href": "/orchestration/" },
+        { "title": "About", "text": "Who builds it, what state it is in and the honest limits.", "href": "/about/" }
+      ]
+    }
+  ],
+  "claims": [
+    { "claim": "repo-revamp is a Claude Code plugin.", "evidence": ".claude-plugin/plugin.json", "status": "verified" },
+    { "claim": "The plugin version is 1.0.1.", "evidence": ".claude-plugin/plugin.json", "status": "verified" },
+    { "claim": "The plugin is licensed under the MIT License.", "evidence": "LICENSE", "status": "verified" },
+    { "claim": "The repository has 17 reference files numbered 00 to 16.", "evidence": "skills/repo-revamp/references/00-project-profile.md; skills/repo-revamp/references/16-maintenance.md", "status": "verified" },
+    { "claim": "The repository has 7 templates.", "evidence": "skills/repo-revamp/references/templates/PR-BODY.template.md", "status": "verified" },
+    { "claim": "The repository has 5 slash commands.", "evidence": "commands/revamp.md; commands/revamp-batch.md; commands/revamp-deploy.md; commands/revamp-status.md; commands/revamp-verify.md", "status": "verified" },
+    { "claim": "The repository has 3 agents.", "evidence": "agents/site-builder.md; agents/repo-investigator.md; agents/revamp-verifier.md", "status": "verified" },
+    { "claim": "The plugin ships 3 scripts.", "evidence": "scripts/verify_site.py; scripts/shots_inventory.py; scripts/validate_plugin.py", "status": "verified" },
+    { "claim": "The Markdown under skills/, commands/ and agents/ is 3,489 lines.", "evidence": "computed by scripts/build_site.py from skills/, commands/ and agents/", "status": "verified" },
+    { "claim": "The three plugin scripts are 637 lines of Python.", "evidence": "computed by scripts/build_site.py from scripts/verify_site.py, scripts/shots_inventory.py and scripts/validate_plugin.py", "status": "verified" },
+    { "claim": "The plugin is installed with /plugin install repo-revamp --marketplace FiredMosquito831/repo-revamp.", "evidence": "README.md", "status": "verified" },
+    { "claim": "The requirements are Claude Code with plugin support, git, gh and Python 3.12.", "evidence": "README.md", "status": "verified" },
+    { "claim": "The phase state machine has eight phases, INTAKE through CLOSE, each with an exit gate.", "evidence": "skills/repo-revamp/SKILL.md", "status": "verified" },
+    { "claim": "The state file is _revamp/<repo>/STATE.md.", "evidence": "skills/repo-revamp/SKILL.md", "status": "verified" },
+    { "claim": "A presentation-only revamp may change only the README, the site, the builder, the requirements file, the site workflow and an append-only .gitignore.", "evidence": "skills/repo-revamp/SKILL.md", "status": "verified" },
+    { "claim": "The installed plugin reports six skills: repo-revamp and the five commands.", "evidence": "site/shots/manifest.json", "status": "verified" },
+    { "claim": "The builder is deterministic: no wall clock, no git history and no randomness.", "evidence": "skills/repo-revamp/references/04-builder.md", "status": "verified" },
+    { "claim": "Every factual statement needs a claims row with evidence.", "evidence": "skills/repo-revamp/references/05-content-truth.md", "status": "verified" }
+  ]
+}
