@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+<article class="page">
+{% if breadcrumbs %}
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <ol>
+{% for crumb in breadcrumbs %}
+      <li>{% if crumb.path %}<a href="{{ crumb.path }}">{{ crumb.label }}</a>{% else %}<span aria-current="page">{{ crumb.label }}</span>{% endif %}</li>
+{% endfor %}
+    </ol>
+  </nav>
+{% endif %}
+  <header class="page-head">
+{% if page.eyebrow %}
+    <p class="eyebrow">{{ page.eyebrow }}</p>
+{% endif %}
+    <h1>{{ page.h1 }}</h1>
+{% if page.lead %}
+    <p class="lead">{{ lead_html | safe }}</p>
+{% endif %}
+  </header>
+  <div class="page-grid{% if not toc %} page-grid-single{% endif %}">
+{% if toc %}
+    <nav class="toc" aria-label="On this page">
+      <p class="toc-title">On this page</p>
+      <ol>
+{% for item in toc %}
+        <li><a href="#{{ item.id }}">{{ item.text }}</a></li>
+{% endfor %}
+      </ol>
+    </nav>
+{% endif %}
+    <div class="prose">
+{{ body | safe }}
+    </div>
+  </div>
+</article>
+{% endblock %}

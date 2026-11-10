@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gates | repo-revamp</title>
+<meta name="description" content="The deterministic builder&#39;s gates: secret scan, forbidden strings, links, metadata, alt text, JSON-LD, sitemap, the social image, tokens and more.">
+<link rel="canonical" href="https://reporevamp.danubelabs.net/gates/">
+<meta name="theme-color" content="#0B0F14">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="repo-revamp">
+<meta property="og:title" content="Gates | repo-revamp">
+<meta property="og:description" content="The deterministic builder&#39;s gates: secret scan, forbidden strings, links, metadata, alt text, JSON-LD, sitemap, the social image, tokens and more.">
+<meta property="og:url" content="https://reporevamp.danubelabs.net/gates/">
+<meta property="og:image" content="https://reporevamp.danubelabs.net/og.png">
+<meta property="og:image:alt" content="repo-revamp: the playbook that turns a repository into a live, documented, search-indexed site.">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Gates | repo-revamp">
+<meta name="twitter:description" content="The deterministic builder&#39;s gates: secret scan, forbidden strings, links, metadata, alt text, JSON-LD, sitemap, the social image, tokens and more.">
+<meta name="twitter:image" content="https://reporevamp.danubelabs.net/og.png">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"The gates","url":"https://reporevamp.danubelabs.net/gates/","description":"The deterministic builder's gates: secret scan, forbidden strings, links, metadata, alt text, JSON-LD, sitemap, the social image, tokens and more."}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://reporevamp.danubelabs.net/"},{"@type":"ListItem","position":2,"name":"Gates","item":"https://reporevamp.danubelabs.net/gates/"}]}</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="/">
+      <img class="brand-mark" src="/favicon.svg" alt="repo-revamp" width="30" height="30">
+      <span class="brand-name">repo-revamp</span>
+      <span class="brand-tag">v1.0.1</span>
+    </a>
+    <nav class="site-nav" aria-label="Primary">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/install/">Install</a></li>
+        <li><a href="/quick-start/">Quick start</a></li>
+        <li><a href="/phases/">Phases</a></li>
+        <li><a href="/gates/" aria-current="page">Gates</a></li>
+        <li><a href="/screenshots/">Screenshots</a></li>
+        <li><a href="/deployment/">Deployment</a></li>
+        <li><a href="/orchestration/">Orchestration</a></li>
+        <li><a href="/reference/">Reference</a></li>
+        <li><a href="/faq/">FAQ</a></li>
+        <li><a href="/about/">About</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+<main id="main" class="site-main">
+<article class="page">
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <ol>
+      <li><a href="/">Home</a></li>
+      <li><span aria-current="page">Gates</span></li>
+    </ol>
+  </nav>
+  <header class="page-head">
+    <p class="eyebrow">Build</p>
+    <h1>The gates</h1>
+    <p class="lead">The builder writes nothing until every gate passes. The first failure stops the build, prints the file and the line, and leaves docs/ untouched.</p>
+  </header>
+  <div class="page-grid">
+    <nav class="toc" aria-label="On this page">
+      <p class="toc-title">On this page</p>
+      <ol>
+        <li><a href="#the-ten-core-gates">The ten core gates</a></li>
+        <li><a href="#the-site-gates">The site gates</a></li>
+        <li><a href="#the-secret-scan">The secret scan</a></li>
+        <li><a href="#determinism">Determinism</a></li>
+        <li><a href="#ci">CI</a></li>
+        <li><a href="#what-the-gates-do-not-prove">What the gates do not prove</a></li>
+      </ol>
+    </nav>
+    <div class="prose">
+<p>A gate that cannot fail is not a gate. Each one below is a check the builder runs against the rendered output, not a promise in a document. The build is deterministic, so the same inputs produce the same bytes and the same verdict.</p>
+<figure class="figure" id="figure-gate-pipeline"><div class="figure-scroll" tabindex="0" role="group" aria-label="Scrollable diagram"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 700" role="img" aria-labelledby="gp-title gp-desc" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif">
+  <title id="gp-title">The gate pipeline</title>
+  <desc id="gp-desc">Eleven gates run in order and fail fast: secret scan, forbidden strings, links, page metadata, alt text, JSON-LD, sitemap, the social image size, tokens only, the revision-2 content gates, and the site gates. A red cross beside every gate marks a failure that stops the build before anything is written.</desc>
+  <defs>
+    <marker id="gp-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#F85149"/>
+    </marker>
+  </defs>
+
+  <text x="20" y="30" fill="#E6EDF3" font-size="19" font-weight="700">The gate pipeline</text>
+  <text x="20" y="50" fill="#9FB0C0" font-size="13">Every gate runs before anything is written. The first failure stops the build.</text>
+
+  <g font-size="15">
+    <g>
+      <rect x="40" y="72" width="560" height="38" rx="8" fill="#111821" stroke="#6B7B92" stroke-width="1.5"/>
+      <circle cx="64" cy="91" r="11" fill="#18212C" stroke="#6B7B92" stroke-width="1.5"/>
+      <text x="64" y="96" fill="#E6EDF3" font-size="12" font-weight="700" text-anchor="middle">1</text>
+      <text x="88" y="96" fill="#E6EDF3">Secret scan</text>
+      <text x="612" y="96" fill="#F85149" font-size="16" font-weight="700">✕</text>
+    </g>
+    <g>
+      <rect x="40" y="120" width="560" height="38" rx="8" fill="#111821" stroke="#6B7B92" stroke-width="1.5"/>
+      <circle cx="64" cy="139" r="11" fill="#18212C" stroke="#6B7B92" stroke-width="1.5"/>
+      <text x="64" y="144" fill="#E6EDF3" font-size="12" font-weight="700" text-anchor="middle">2</text>
+      <text x="88" y="144" fill="#E6EDF3">Forbidden strings</text>
+      <text x="612" y="144" fill="#F85149" font-size="16" font-weight="700">✕</text>
+    </g>
+    <g>
+      <rect x="40" y="168" width="560" height="38" rx="8" fill="#111821" stroke="#6B7B92" stroke-width="1.5"/>
+      <circle cx="64" cy="187" r="11" fill="#18212C" stroke="#6B7B92" stroke-width="1.5"/>
+      <text x="64" y="192" fill="#E6EDF3" font-size="12" font-weight="700" text-anchor="middle">3</text>
+      <text x="88" y="192" fill="#E6EDF3">Internal links and fragments</text>
+      <text x="612" y="192" fill="#F85149" font-size="16" font-weight="700">✕</text>
+    </g>
+    <g>
+      <rect x="40" y="216" width="560" height="38" rx="8" fill="#111821" stroke="#6B7B92" stroke-width="1.5"/>
+      <circle cx="64" cy="235" r="11" fill="#18212C" stroke="#6B7B92" stroke-width="1.5"/>
+      <text x="64" y="240" fill="#E6EDF3" font-size="12" font-weight="700" text-anchor="middle">4</text>
+      <text x="88" y="240" fill="#E6EDF3">Page metadata: one h1, title, description, canonical</text>
+      <text x="612" y="240" fill="#F85149" font-size="16" font-weight="700">✕</text>
+    </g>
+    <g>
+      <rect x="40" y="264" width="560" height="38" rx="8" fill="#111821" stroke="#6B7B92" stroke-width="1.5"/>
+      <circle cx="64" cy="283" r="11" fill="#18212C" stroke="#6B7B92" stroke-width="1.5"/>
+      <text x="64" y="288" fill="#E6EDF3" font-size="12" font-weight="700" text-anchor="middle">5</text>
+      <text x="88" y="288" fill="#E6EDF3">Alt text on every image</text>
+      <text x="612" y="288" fill="#F85149" font-size="16" font-weight="700">✕</text>
+    </g>
+    <g>
+      <rect x="40" y="312" width="560" height="38" rx="8" fill="#111821" stroke="#6B7B92" stroke-width="1.5"/>
+      <circle cx="64" cy="331" r="11" fill="#18212C" stroke="#6B7B92" stroke-width="1.5"/>
+      <text x="64" y="336" fill="#E6EDF3" font-size="12" font-weight="700" text-anchor="middle">6</text>
+      <text x="88" y="336" fill="#E6EDF3">JSON-LD parses</text>
+      <text x="612" y="336" fill="#F85149" font-size="16" font-weight="700">✕</text>
+    </g>
+    <g>
+      <rect x="40" y="360" width="560" height="38" rx="8" fill="#111821" stroke="#6B7B92" stroke-width="1.5"/>
+      <circle cx="64" cy="379" r="11" fill="#18212C" stroke="#6B7B92" stroke-width="1.5"/>
+      <text x="64" y="384" fill="#E6EDF3" font-size="12" font-weight="700" text-anchor="middle">7</text>
+      <text x="88" y="384" fill="#E6EDF3">Every sitemap URL has a file</text>
+      <text x="612" y="384" fill="#F85149" font-size="16" font-weight="700">✕</text>
+    </g>
+    <g>
+      <rect x="40" y="408" width="560" height="38" rx="8" fill="#111821" stroke="#6B7B92" stroke-width="1.5"/>
+      <circle cx="64" cy="427" r="11" fill="#18212C" stroke="#6B7B92" stroke-width="1.5"/>
+      <text x="64" y="432" fill="#E6EDF3" font-size="12" font-weight="700" text-anchor="middle">8</text>
+      <text x="88" y="432" fill="#E6EDF3">Social image is exactly 1200 by 630</text>
+      <text x="612" y="432" fill="#F85149" font-size="16" font-weight="700">✕</text>
+    </g>
+    <g>
+      <rect x="40" y="456" width="560" height="38" rx="8" fill="#111821" stroke="#6B7B92" stroke-width="1.5"/>
+      <circle cx="64" cy="475" r="11" fill="#18212C" stroke="#6B7B92" stroke-width="1.5"/>
+      <text x="64" y="480" fill="#E6EDF3" font-size="12" font-weight="700" text-anchor="middle">9</text>
+      <text x="88" y="480" fill="#E6EDF3">Colours come from the tokens</text>
+      <text x="612" y="480" fill="#F85149" font-size="16" font-weight="700">✕</text>
+    </g>
+    <g>
+      <rect x="40" y="504" width="560" height="38" rx="8" fill="#111821" stroke="#6B7B92" stroke-width="1.5"/>
+      <circle cx="64" cy="523" r="11" fill="#18212C" stroke="#6B7B92" stroke-width="1.5"/>
+      <text x="64" y="528" fill="#E6EDF3" font-size="12" font-weight="700" text-anchor="middle">10</text>
+      <text x="88" y="528" fill="#E6EDF3">Content gates: word counts, diagrams, reference</text>
+      <text x="612" y="528" fill="#F85149" font-size="16" font-weight="700">✕</text>
+    </g>
+    <g>
+      <rect x="40" y="552" width="560" height="38" rx="8" fill="#18212C" stroke="#3FB950" stroke-width="2"/>
+      <circle cx="64" cy="571" r="11" fill="#3FB950"/>
+      <text x="64" y="576" fill="#04130A" font-size="12" font-weight="700" text-anchor="middle">11</text>
+      <text x="88" y="576" fill="#E6EDF3">Site gates: CNAME, legal texts, no external requests, no internal process, claims</text>
+      <text x="612" y="576" fill="#F85149" font-size="16" font-weight="700">✕</text>
+    </g>
+  </g>
+
+  <!-- fail line -->
+  <line x1="630" y1="91" x2="630" y2="571" stroke="#F85149" stroke-width="1.5" stroke-dasharray="5 5"/>
+  <line x1="640" y1="331" x2="672" y2="331" stroke="#F85149" stroke-width="2" marker-end="url(#gp-arrow)"/>
+  <text x="682" y="326" fill="#E6EDF3" font-size="13" font-weight="600">fail</text>
+  <text x="682" y="344" fill="#9FB0C0" font-size="12">the build stops</text>
+  <text x="682" y="362" fill="#9FB0C0" font-size="12">nothing is written</text>
+
+  <!-- pass path -->
+  <line x1="320" y1="590" x2="320" y2="614" stroke="#3FB950" stroke-width="2" marker-end="url(#gp-arrow)"/>
+  <text x="332" y="612" fill="#3FB950" font-size="13" font-weight="600">all pass</text>
+  <text x="404" y="612" fill="#9FB0C0" font-size="13">docs/ is written</text>
+
+  <!-- legend -->
+  <g>
+    <rect x="20" y="640" width="860" height="1" fill="#6B7B92"/>
+    <rect x="30" y="656" width="16" height="16" rx="3" fill="#111821" stroke="#6B7B92"/>
+    <text x="54" y="669" fill="#9FB0C0" font-size="12">gate, in order</text>
+    <text x="180" y="669" fill="#F85149" font-size="15" font-weight="700">✕</text>
+    <text x="200" y="669" fill="#9FB0C0" font-size="12">failure stops the build</text>
+    <rect x="380" y="656" width="16" height="16" rx="3" fill="#18212C" stroke="#3FB950" stroke-width="2"/>
+    <text x="404" y="669" fill="#9FB0C0" font-size="12">the site-specific gates</text>
+  </g>
+</svg></div><p class="figure-hint">Scroll the diagram sideways to see all of it.</p><figcaption>The gates run in order and fail fast; nothing is written until all of them pass.</figcaption><p class="figure-alt"><span class="figure-alt-label">Text alternative:</span> Eleven gates in order: secret scan, forbidden strings, internal links and fragments, page metadata, alt text, JSON-LD, sitemap files, the social image size, tokens only, the content gates for word counts, diagrams and the generated reference, and the site gates for CNAME, legal texts, external requests, internal process and the claims ledger. A failure at any gate stops the build before anything is written.</p></figure>
+<h2 id="the-ten-core-gates">The ten core gates</h2>
+<div class="table-wrap"><table><caption>The gates the playbook prescribes, in order</caption><thead><tr><th scope="col">#</th><th scope="col">Gate</th><th scope="col">Fails when</th></tr></thead><tbody><tr><td>1</td><td>Secret scan</td><td>A pattern matches a text file under site/ or docs/.</td></tr><tr><td>2</td><td>Forbidden strings</td><td>A fixed list of unfinished-content markers appears anywhere.</td></tr><tr><td>3</td><td>Links</td><td>An internal href or src does not resolve, or a fragment has no id.</td></tr><tr><td>4</td><td>Page metadata</td><td>Not exactly one h1, a title over 60 characters, a description outside 120 to 160, or a duplicate.</td></tr><tr><td>5</td><td>Alt text</td><td>An img has no non-empty alt.</td></tr><tr><td>6</td><td>JSON-LD</td><td>A structured-data block does not parse.</td></tr><tr><td>7</td><td>Sitemap</td><td>A URL in sitemap.xml has no file in docs/.</td></tr><tr><td>8</td><td>Social image</td><td>og.png is missing or not exactly 1200 by 630.</td></tr><tr><td>9</td><td>Tokens</td><td>A colour in the CSS, a template or a diagram is not a design token.</td></tr><tr><td>10</td><td>Content gates</td><td>A page is outside its word range, a diagram lacks a title or description, or the generated reference is incomplete.</td></tr></tbody></table></div>
+<h2 id="the-site-gates">The site gates</h2>
+<p>This site adds the checks its own job needs: the CNAME file must hold the bare hostname, the non-affiliation and licence texts must appear in every footer, no page may request an external resource, no internal process artifact may leak into the output, and every page must carry a claims list whose evidence resolves to a real file.</p>
+<p>The reference page has a gate of its own: the builder reads the commands, agents, references, templates and scripts from the repository, renders one entry per file with a stable anchor, and fails if a listed file is missing, a family is empty, or the rendered entry count differs from the real file count.</p>
+<h2 id="the-secret-scan">The secret scan</h2>
+<p>The scan covers every text file under <code>site/</code> and <code>docs/</code>: HTML, JSON, JSON-LD, the sitemap, the manifest, alt text and captions. It looks for token shapes, key prefixes, service-role assignments, connection strings, credential assignments, email addresses, private IP addresses, hosted project references and owner file paths.</p>
+<p>A hit is reported by file and line with the pattern name, never with the matched value. Zero hits is the only pass. An allowlist entry would need the owner's written approval and a comment saying why; this project has none.</p>
+<h2 id="determinism">Determinism</h2>
+<p>The build must be byte-identical across machines, checkouts and days. That rules out four things: the wall clock, git history, random identifiers and unordered iteration. The sitemap's last-modified date is a fixed value in the site data, updated deliberately. Slugs are derived from names. Every list is sorted and every file is written with LF newlines.</p>
+<p>The proof is the check mode: it builds into a temporary directory, compares every file byte for byte with the committed <code>docs/</code>, prints the names that differ, and exits non-zero on any difference. It never writes to <code>docs/</code>.</p>
+<figure class="code-block"><figcaption>The check</figcaption><pre><code>python scripts/build_site.py --check
+check: docs/ is byte-identical to a fresh build</code></pre></figure>
+<p>If the check reports differences on every page, the playbook says to suspect configuration before content: line endings from a checkout setting, a generated file that is ignored by git, stale committed output, or a date read from history.</p>
+<h2 id="ci">CI</h2>
+<p>A workflow named Site check runs the same command on every pull request and on pushes that touch the site paths. It installs the pinned requirements and runs <code>python scripts/build_site.py --check</code>. The command is identical locally and in CI; if CI ran something else, the gate would not be the gate.</p>
+<p>The existing plugin workflow is untouched. The site workflow is a new file, and it has read-only permissions.</p>
+<h2 id="what-the-gates-do-not-prove">What the gates do not prove</h2>
+<p>A gate proves that the output is internally consistent, not that every sentence is true. Truth comes from the claims ledger: one row per factual statement, with evidence that resolves to a file. A green build with a wrong number is still a wrong site, which is why the numbers are computed from the repository or recorded with the command that produced them.</p>
+<div class="hero-actions"><a class="btn btn-secondary" href="/phases/">The phases</a><a class="btn btn-primary" href="/screenshots/">The screenshot pipeline</a></div>
+    </div>
+  </div>
+</article>
+</main>
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <nav class="footer-nav" aria-label="Footer">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/install/">Install</a></li>
+        <li><a href="/reference/">Reference</a></li>
+        <li><a href="/faq/">FAQ</a></li>
+        <li><a href="/license/">License</a></li>
+        <li><a href="https://github.com/FiredMosquito831/repo-revamp">GitHub</a></li>
+      </ul>
+    </nav>
+    <p class="legal">repo-revamp is an independent project. It is not affiliated with, endorsed by, or sponsored by Anthropic. Claude and Claude Code are trademarks of Anthropic.</p>
+    <p class="legal">Licensed under the MIT License.</p>
+    <p class="legal muted">Copyright 2026 Danube Labs. Built from the plugin's own playbook.</p>
+  </div>
+</footer>
+<script src="/assets/site.js" defer></script>
+</body>
+</html>

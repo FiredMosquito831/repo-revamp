@@ -1,0 +1,19 @@
+{
+  "slug": "404",
+  "path": "/404.html",
+  "nav": "",
+  "nav_order": 99,
+  "title": "Page not found | repo-revamp",
+  "description": "That address does not exist on this site. Follow the links to the home page, the install guide, the generated reference or the FAQ.",
+  "h1": "Page not found",
+  "eyebrow": "404",
+  "lead": "That address does not exist on this site. The pages below cover everything the plugin does.",
+  "priority": "0.0",
+  "words": [60, 100],
+  "toc": false,
+  "noindex": true,
+  "sections": [],
+  "claims": [
+    { "claim": "The 404 page is not in the sitemap and carries noindex.", "evidence": "scripts/build_site.py", "status": "verified" }
+  ]
+}

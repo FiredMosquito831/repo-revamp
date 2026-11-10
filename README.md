@@ -4,6 +4,8 @@ A Claude Code plugin that turns a GitHub repository into a live, polished, searc
 
 It is the complete playbook distilled from nine public repository revamps and one private product site: read-only recon, a numbered spec with the owner's binding decisions, a delegated build of a generated static site in `docs/`, a deterministic builder with hard gates, a reviewed screenshot pipeline, an original design system, full SEO, deployment to GitHub Pages or Cloudflare Pages, PR and merge discipline, and an exhaustive verification recipe.
 
+The plugin documents itself at <https://reporevamp.danubelabs.net>, generated from this repository.
+
 ## Install
 
 One step, from the marketplace in this repository:

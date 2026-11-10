@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>repo-revamp social image</title>
+<style>
+  :root {
+    --bg: #0B0F14; --surface: #111821; --surface-2: #18212C;
+    --text: #E6EDF3; --muted: #9FB0C0; --border: #6B7B92;
+    --accent: #3FB950; --accent-contrast: #04130A;
+    --red: #F85149; --amber: #D29922; --blue: #58A6FF;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --mono: ui-monospace, SFMono-Regular, "Cascadia Mono", Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; width: 1200px; height: 630px; overflow: hidden; }
+  body {
+    background-color: var(--bg);
+    background-image:
+      linear-gradient(to right, rgba(107,123,146,.14) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(107,123,146,.14) 1px, transparent 1px);
+    background-size: 48px 48px;
+    color: var(--text);
+    font-family: var(--sans);
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    align-items: center;
+    gap: 40px;
+    padding: 64px 72px;
+  }
+  .eyebrow { font-family: var(--mono); font-size: 24px; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); margin: 0 0 20px; }
+  h1 { font-size: 62px; line-height: 1.08; letter-spacing: -.025em; margin: 0 0 24px; text-wrap: balance; }
+  p { font-size: 26px; line-height: 1.4; color: var(--muted); margin: 0 0 28px; max-width: 640px; }
+  .url { font-family: var(--mono); font-size: 24px; color: var(--text); border: 1px solid var(--border); border-radius: 12px; padding: 12px 18px; display: inline-block; }
+  .art { display: grid; place-items: center; }
+  .art svg { display: block; }
+</style>
+</head>
+<body>
+  <div class="copy">
+    <p class="eyebrow">Claude Code plugin</p>
+    <h1>repo-revamp</h1>
+    <p>Turn a repository into a live, documented, search-indexed site. Phases, gates, screenshots, SEO and verification.</p>
+    <span class="url">reporevamp.danubelabs.net</span>
+  </div>
+  <div class="art">
+    <svg width="360" height="360" viewBox="0 0 360 360" role="img" aria-label="The repo-revamp icon: a dark window with three status dots, a rising green arrow and a grid of blue dots">
+      <rect x="20" y="40" width="320" height="280" rx="42" fill="#111821" stroke="#6B7B92" stroke-width="8"/>
+      <line x1="20" y1="104" x2="340" y2="104" stroke="#6B7B92" stroke-width="8"/>
+      <circle cx="62" cy="72" r="12" fill="#F85149"/>
+      <circle cx="104" cy="72" r="12" fill="#D29922"/>
+      <circle cx="146" cy="72" r="12" fill="#3FB950"/>
+      <rect x="60" y="150" width="150" height="18" rx="9" fill="#9FB0C0"/>
+      <rect x="60" y="188" width="96" height="16" rx="8" fill="#6B7B92"/>
+      <path d="M 66 286 L 190 216 L 218 232 L 268 176" fill="none" stroke="#3FB950" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M 214 172 H 272 V 230" fill="none" stroke="#3FB950" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/>
+      <g fill="#58A6FF">
+        <circle cx="268" cy="248" r="6"/><circle cx="292" cy="248" r="6"/><circle cx="316" cy="248" r="6"/>
+        <circle cx="268" cy="272" r="6"/><circle cx="292" cy="272" r="6"/><circle cx="316" cy="272" r="6"/>
+        <circle cx="268" cy="296" r="6"/><circle cx="292" cy="296" r="6"/><circle cx="316" cy="296" r="6"/>
+      </g>
+    </svg>
+  </div>
+</body>
+</html>

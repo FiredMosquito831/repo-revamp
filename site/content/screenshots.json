@@ -1,0 +1,74 @@
+{
+  "slug": "screenshots",
+  "path": "/screenshots/",
+  "nav": "Screenshots",
+  "nav_order": 6,
+  "title": "Screenshots | repo-revamp",
+  "description": "The screenshot pipeline: inventory, SHA-256 de-duplication, perceptual clustering, visual review, redaction on a copy, derivatives and a manifest.",
+  "h1": "The screenshot pipeline",
+  "eyebrow": "Images",
+  "lead": "A gallery is the most persuasive part of a product site and the easiest place to leak something. Every image is inventoried, de-duplicated, reviewed, redacted on a copy and recorded.",
+  "priority": "0.7",
+  "words": [800, 1200],
+  "toc": true,
+  "sections": [
+    { "type": "p", "text": "The pipeline is mandatory, and it is ordered. Inventory first, then exact duplicates, then near-duplicates, then a visual review of every candidate, then redaction on a copy, then derivatives, then a manifest and a coverage matrix. A screenshot that skipped a step does not ship." },
+    { "type": "h2", "text": "1. Inventory" },
+    { "type": "p", "text": "The inventory lists every tracked image with its bytes, dimensions and SHA-256. Images are grouped by origin: captures shipped with the product, captures found in QA or verification material, and everything else such as diagrams, icons and logos." },
+    { "type": "p", "text": "Three kinds are excluded before review, and recorded as excluded: anything under an internal folder, anything that is not a UI capture, and anything below a usable resolution. The exclusion is a verdict, not a silent skip." },
+    { "type": "h2", "text": "2. Exact duplicates" },
+    { "type": "p", "text": "Identical SHA-256 hashes are one image. One is kept and the rest are recorded as duplicates of the kept id. The counts have to reconcile: inventory equals duplicates plus near-duplicates plus excluded-before-review plus reviewed." },
+    { "type": "h2", "text": "3. Near-duplicates" },
+    { "type": "p", "text": "A perceptual hash clusters images that look alike. The playbook uses a Hamming distance of four or less, with Pillow and imagehash in a scratch environment, never in the repository. The clearest representative of each cluster is kept: sharpest, most complete state, no cursor, no toast covering content." },
+    { "type": "p", "text": "The script that does this is `scripts/shots_inventory.py`. Its `inventory` stage is standard library only; `cluster` and `sheets` need Pillow, and `cluster` also needs imagehash." },
+    { "type": "h2", "text": "4. Contact sheets and review" },
+    { "type": "p", "text": "Contact sheets are built outside the repository, four columns by three rows, with each tile labelled by its inventory id. Every tile is reviewed. For any tile where sensitive content might be present, the full-size original is opened read-only and inspected before a decision is made." },
+    { "type": "p", "text": "The review checklist is specific: keys and tokens, passwords and filled password fields, mail and database credentials, connection strings, email addresses and personal names, invoices, project references, private IP addresses and hostnames, owner file paths, real third-party data, and internal file names that leak the process. Any hit makes the image a redaction candidate or an exclusion." },
+    { "type": "h2", "text": "5. Verdicts" },
+    {
+      "type": "table",
+      "caption": "Every candidate gets exactly one verdict",
+      "head": ["Verdict", "Meaning"],
+      "rows": [
+        ["INCLUDE", "Clean and public-safe."],
+        ["REDACT", "Useful, with sensitive regions that can be covered cleanly on a copy."],
+        ["EXCLUDE", "Not used, with a reason: duplicate, near-duplicate, forbidden folder, not UI, too small, wrong content, broken layout, loading state, error state, email present, real data or unclear."]
+      ]
+    },
+    { "type": "p", "text": "The counts must reconcile. Reviewed equals INCLUDE plus REDACT plus EXCLUDE, and every candidate has a verdict. A candidate with no verdict is an unfinished review, not a pass." },
+    { "type": "h2", "text": "6. Redaction" },
+    { "type": "p", "text": "Redaction happens on a copy, never on the original. Solid rectangles cover the exact regions identified at full size, and each rectangle is recorded as x, y, width and height in original pixel coordinates. After redaction the derivative is opened again and checked: the sensitive text must be unreadable, and nothing else may be hidden." },
+    { "type": "p", "text": "A crop can reveal what the full image hid, so the full review runs again on the crop or the redacted derivative." },
+    { "type": "h2", "text": "7. Derivatives" },
+    { "type": "p", "text": "Each accepted image becomes two files: a full derivative at a maximum width of 1600 and quality around 80, and a thumbnail at a maximum width of 640 and quality around 75. Slugs are descriptive and lowercase, with no internal ids or numbering. The budgets are per-file and per-directory, and a derivative that exceeds them is re-encoded, not shipped." },
+    { "type": "h2", "text": "8. The manifest" },
+    { "type": "p", "text": "`site/shots/manifest.json` records every derivative: slug, area, alt text, caption, source path, verdict, whether it was redacted, its width and height, and any callout coordinates. The builder reads the manifest and refuses to render an image that has no alt text or no caption." },
+    { "type": "p", "text": "The source path is for traceability only. The builder never copies an original into the site; it copies the reviewed derivative." },
+    { "type": "h2", "text": "9. Alt text and captions" },
+    { "type": "p", "text": "Every image has both. The alt text describes what the screen shows and what a visitor learns, in one or two plain sentences, with no secret, path, email, project reference or internal jargon. The caption is one sentence: what it shows and why it matters. An empty state, a loading state and an error state each get a caption that says so; none of them is captioned as if it showed data." },
+    { "type": "h2", "text": "10. Coverage" },
+    { "type": "p", "text": "A coverage matrix maps every feature area to the page that shows it and the number of approved images. A feature area with no approved image shows no image slot at all. There is no empty frame waiting for a picture, and no caption written for an image that does not exist." },
+    { "type": "callout", "tone": "info", "title": "This site's images", "text": "The plugin has no product UI, so this site uses original SVG diagrams and three redacted terminal captures of real commands. The originals are read-only; the derivatives are new files." },
+    {
+      "type": "cta",
+      "items": [
+        { "label": "The gates", "href": "/gates/", "style": "secondary" },
+        { "label": "Deployment", "href": "/deployment/", "style": "primary" }
+      ]
+    }
+  ],
+  "claims": [
+    { "claim": "The pipeline order is inventory, exact duplicates, near-duplicates, review, redaction, derivatives, manifest and coverage.", "evidence": "skills/repo-revamp/references/06-screenshots.md", "status": "verified" },
+    { "claim": "The inventory records bytes, dimensions and SHA-256 for every tracked image.", "evidence": "skills/repo-revamp/references/06-screenshots.md", "status": "verified" },
+    { "claim": "Near-duplicates are clustered at a Hamming distance of four or less.", "evidence": "skills/repo-revamp/references/06-screenshots.md", "status": "verified" },
+    { "claim": "Pillow and imagehash are used in a scratch environment, never in the repository.", "evidence": "skills/repo-revamp/references/06-screenshots.md", "status": "verified" },
+    { "claim": "scripts/shots_inventory.py has inventory, dedupe, cluster and sheets stages.", "evidence": "scripts/shots_inventory.py", "status": "verified" },
+    { "claim": "The inventory stage is standard library only; cluster and sheets need Pillow, and cluster needs imagehash.", "evidence": "scripts/shots_inventory.py", "status": "verified" },
+    { "claim": "Contact sheets are four columns by three rows and live outside the repository.", "evidence": "skills/repo-revamp/references/06-screenshots.md", "status": "verified" },
+    { "claim": "Redaction is done on a copy and recorded as x, y, width and height.", "evidence": "skills/repo-revamp/references/06-screenshots.md", "status": "verified" },
+    { "claim": "Full derivatives are at most 1600 wide at quality around 80; thumbnails at most 640 wide at quality around 75.", "evidence": "skills/repo-revamp/references/06-screenshots.md", "status": "verified" },
+    { "claim": "The manifest records slug, area, alt, caption, source, verdict, redacted, width, height and callouts.", "evidence": "skills/repo-revamp/references/06-screenshots.md", "status": "verified" },
+    { "claim": "A feature area with no approved image shows no image slot.", "evidence": "skills/repo-revamp/references/06-screenshots.md", "status": "verified" },
+    { "claim": "This site uses original SVG diagrams and three redacted terminal captures.", "evidence": "site/shots/manifest.json; site/static/diagrams/phase-machine.svg", "status": "verified" }
+  ]
+}

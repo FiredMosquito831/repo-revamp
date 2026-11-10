@@ -1,0 +1,83 @@
+{
+  "slug": "deployment",
+  "path": "/deployment/",
+  "nav": "Deployment",
+  "nav_order": 7,
+  "title": "Deployment | repo-revamp",
+  "description": "Deploy the generated site to GitHub Pages or Cloudflare Pages: the two DNS postures, the certificate nudge, the served-commit check and the traps.",
+  "h1": "Deployment",
+  "eyebrow": "Host",
+  "lead": "Two hosts, two opposite DNS postures. Getting them backwards causes HTTPS failures that look like certificate problems.",
+  "priority": "0.7",
+  "words": [800, 1200],
+  "toc": true,
+  "sections": [
+    { "type": "p", "text": "The host is chosen in INTAKE, not at deploy time. A public repository with no need for previews goes to GitHub Pages. A private repository with a public site, or an owner who wants preview deployments, goes to Cloudflare Pages. The choice is recorded in the spec and the state file." },
+    {
+      "type": "table",
+      "caption": "The decision, in one table",
+      "head": ["Condition", "Host"],
+      "rows": [
+        ["Public repository, no previews needed", "GitHub Pages from the default branch, output docs/"],
+        ["Private repository, public site", "Cloudflare Pages from the site branch, output docs"],
+        ["Public repository, preview deployments wanted", "Cloudflare Pages"],
+        ["Public repository, owner prefers Cloudflare", "Cloudflare Pages"]
+      ]
+    },
+    { "type": "h2", "text": "The two DNS postures" },
+    { "type": "p", "text": "The custom-domain records are opposites. For GitHub Pages the record is a CNAME to the owner's GitHub Pages hostname, set to DNS-only, the grey cloud. For Cloudflare Pages the record is created by Cloudflare and stays proxied, the orange cloud." },
+    { "type": "callout", "tone": "warning", "title": "Do not flip the record", "text": "A proxied record on GitHub Pages breaks HTTPS in a way that looks like a certificate fault. A DNS-only record on Cloudflare Pages breaks the custom domain the same way. Check the proxy setting before debugging anything else." },
+    { "type": "h2", "text": "GitHub Pages" },
+    { "type": "p", "text": "The site is created from a branch and the `/docs` path. The custom domain is read from `docs/CNAME`, which holds the bare hostname: no protocol, no trailing slash, one line." },
+    { "type": "p", "text": "The build is polled until it reports built, and then the served commit is compared with the branch head. They must match. A site that answers is not proof that it serves the commit you think it does." },
+    { "type": "p", "text": "The certificate has four states: none, authorization pending, authorized and approved. HTTPS is enforced only after the state is approved. Enforcing earlier fails with a certificate error, and the fix is to wait, not to retry harder." },
+    { "type": "p", "text": "If the certificate stays at none, it is usually because the site was created before DNS existed. The playbook's nudge clears the custom domain, waits, and sets it again, then polls until approved." },
+    { "type": "h2", "text": "Cloudflare Pages" },
+    { "type": "p", "text": "Cloudflare Pages needs the owner to authorise the Cloudflare GitHub app for the repository. That is an owner-only step, and an agent must not attempt to bypass it. The project settings are: no framework preset, an empty build command because the output is committed, `docs` as the output directory, and the site branch as the production branch." },
+    { "type": "p", "text": "After the owner connects it, the coordinator confirms the project read-only before attaching the custom domain: the project exists, the GitHub source is attached, the output directory is `docs`, and the production branch is the one in the spec. Every call is recorded with its method, path and status." },
+    { "type": "p", "text": "The `*.pages.dev` address is checked as well. If it serves the same content, that is a second proof that the deployment is healthy. If it does not resolve, that is recorded as a cosmetic finding and the project URL is checked in the dashboard; it is not treated as a deployment failure." },
+    { "type": "p", "text": "Preview deployments are enabled for pull request branches. They are useful for reviewing a site change before it reaches production, and they cost nothing to leave on." },
+    { "type": "h2", "text": "The launch-branch posture" },
+    { "type": "p", "text": "When the owner wants presentation isolation, the site launches from the site branch and nothing merges to the default branch. The default branch keeps the product exactly as it was, the site branch is the presentation artifact, and it is retained indefinitely. Any future site change goes on the same branch and redeploys." },
+    { "type": "p", "text": "This posture is recorded in the spec and the tracker. It is never tidied up later by merging without a new decision." },
+    { "type": "h2", "text": "Traps that bit" },
+    {
+      "type": "table",
+      "caption": "Symptoms, causes and fixes from real deployments",
+      "head": ["Symptom", "Cause", "Fix"],
+      "rows": [
+        ["The social image returns 404 on the live site", "A root ignore rule excluded it and it was never committed", "Add an exception, commit, redeploy, and verify with git check-ignore"],
+        ["The certificate stays at none", "The site was created before DNS existed", "Clear the custom domain, wait, set it again, poll until approved"],
+        ["HTTPS enforcement fails with a certificate error", "It was enforced before the certificate was approved", "Wait for approved, then enforce"],
+        ["Pages serves an old commit", "No rebuild after switching the source", "Trigger a build and poll the commit"],
+        ["The site works but the sitemap 404s", "The sitemap was generated but not committed", "Regenerate, commit the output, push"],
+        ["A page is live but stale", "The builder output was not regenerated", "Run the builder, commit docs/, push"]
+      ]
+    },
+    { "type": "h2", "text": "Verification" },
+    { "type": "p", "text": "The deploy is verified at the served commit, not just at the URL. The root answers over HTTPS, HTTP redirects to it, every sitemap URL returns 200, the social image is 1200 by 630, and the served commit equals the expected head. The deployment id and commit are recorded in the report." },
+    { "type": "code", "label": "The live checks", "text": "curl -s -o /dev/null -w \"%{http_code} %{redirect_url}\\n\" http://<host>/\ncurl -s -o /dev/null -w \"%{http_code}\\n\" https://<host>/og.png\ncurl -s https://<host>/sitemap.xml | grep -o \"<loc>\" | wc -l" },
+    { "type": "p", "text": "The reusable script is `scripts/verify_site.py`. It checks the redirect, the root, the social image, robots and every sitemap URL, and it can run against a local `docs/` directory without any network calls." },
+    {
+      "type": "cta",
+      "items": [
+        { "label": "The gates", "href": "/gates/", "style": "secondary" },
+        { "label": "Orchestration", "href": "/orchestration/", "style": "primary" }
+      ]
+    }
+  ],
+  "claims": [
+    { "claim": "The host is chosen in INTAKE and recorded in the spec and the state file.", "evidence": "skills/repo-revamp/references/09-deployment.md; skills/repo-revamp/references/01-intake.md", "status": "verified" },
+    { "claim": "GitHub Pages uses a CNAME record to the GitHub Pages hostname, set to DNS-only.", "evidence": "skills/repo-revamp/references/09-deployment.md", "status": "verified" },
+    { "claim": "Cloudflare Pages creates the custom-domain record and it stays proxied.", "evidence": "skills/repo-revamp/references/09-deployment.md", "status": "verified" },
+    { "claim": "docs/CNAME holds the bare hostname with no protocol and no trailing slash.", "evidence": "skills/repo-revamp/references/09-deployment.md", "status": "verified" },
+    { "claim": "The served commit must equal the branch head.", "evidence": "skills/repo-revamp/references/09-deployment.md", "status": "verified" },
+    { "claim": "The certificate states are none, authorization pending, authorized and approved.", "evidence": "skills/repo-revamp/references/09-deployment.md", "status": "verified" },
+    { "claim": "HTTPS is enforced only after the certificate is approved.", "evidence": "skills/repo-revamp/references/09-deployment.md", "status": "verified" },
+    { "claim": "Cloudflare Pages needs the owner to authorise the Cloudflare GitHub app.", "evidence": "skills/repo-revamp/references/09-deployment.md", "status": "verified" },
+    { "claim": "Cloudflare Pages uses no framework preset, an empty build command, docs as the output directory and the site branch as the production branch.", "evidence": "skills/repo-revamp/references/09-deployment.md", "status": "verified" },
+    { "claim": "The launch-branch posture keeps the site on its branch and retains it indefinitely.", "evidence": "skills/repo-revamp/references/10-pr-and-merge.md", "status": "verified" },
+    { "claim": "scripts/verify_site.py checks the redirect, the root, the social image, robots and every sitemap URL, and can run locally without network calls.", "evidence": "scripts/verify_site.py", "status": "verified" },
+    { "claim": "The traps table lists the social image 404, the stuck certificate, early HTTPS enforcement, an old served commit, a missing sitemap and stale builder output.", "evidence": "skills/repo-revamp/references/09-deployment.md", "status": "verified" }
+  ]
+}

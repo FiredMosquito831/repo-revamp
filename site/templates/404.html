@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+<article class="page page-404">
+  <header class="page-head">
+    <p class="eyebrow">404</p>
+    <h1>Page not found</h1>
+    <p class="lead">That address does not exist on this site. The pages below cover everything the plugin does.</p>
+  </header>
+  <div class="prose">
+    <p>The site was generated from the repository, so a missing page is usually a mistyped or outdated link.</p>
+    <ul class="list">
+      <li><a href="/">Home</a> — what repo-revamp is and what it produces.</li>
+      <li><a href="/install/">Install</a> — the one-line install and the marketplace route.</li>
+      <li><a href="/reference/">Reference</a> — every command, agent, reference, template and script.</li>
+      <li><a href="/faq/">FAQ</a> — the questions the playbook answers most often.</li>
+    </ul>
+  </div>
+</article>
+{% endblock %}

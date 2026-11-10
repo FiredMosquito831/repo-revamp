@@ -1,0 +1,65 @@
+{
+  "slug": "quick-start",
+  "path": "/quick-start/",
+  "nav": "Quick start",
+  "nav_order": 3,
+  "title": "Quick start | repo-revamp",
+  "description": "Run your first revamp in numbered steps: start the command, answer the spec questions, watch the phases, and read the state file at every boundary.",
+  "h1": "Your first revamp",
+  "eyebrow": "Walkthrough",
+  "lead": "Six steps from an installed plugin to a verified, deployed site. Each step names the phase it belongs to and the file it leaves behind.",
+  "priority": "0.9",
+  "words": [600, 1000],
+  "toc": true,
+  "sections": [
+    { "type": "p", "text": "A revamp is deliberately front-loaded: the first two phases are read-only, and nothing is built until the owner has answered the spec questions. That is what keeps a presentation change from turning into a product change." },
+    { "type": "h2", "text": "The six steps" },
+    {
+      "type": "steps",
+      "items": [
+        { "title": "Start the command", "text": "Run `/repo-revamp:revamp my-old-project` with a repository name or a local path. The skill loads and the state machine starts at INTAKE." },
+        { "title": "Read the recon", "text": "The agent investigates read-only and writes `_revamp/<repo>/RECON.md`: the facts, the feature and configuration inventory, the hosting options and the risks. No file in the repository is touched." },
+        { "title": "Answer the spec", "text": "The agent writes `SPEC.md` with numbered questions and a recommendation for each. The owner answers in one line per question; the answers are appended as a binding `USER DECISIONS` block." },
+        { "title": "Let one agent build", "text": "One implementer works in its own worktree on its own branch. It builds the generated site in `docs/`, runs the gate, commits in logical steps and opens a draft pull request. It never merges and never deploys." },
+        { "title": "Verify before relaying", "text": "The orchestrator re-anchors, runs the boundary diff and the gate on a clean worktree, serves the site locally, runs the browser matrix and looks at a page screenshot. An agent's claim is a hypothesis until then." },
+        { "title": "Deploy on the owner's go", "text": "The owner does the steps only an owner can do: authorise the host, create the DNS record, approve the certificate. Then the live URLs, the sitemap and the served commit are checked." }
+      ]
+    },
+    { "type": "h2", "text": "What the commands look like" },
+    { "type": "p", "text": "The revamp command is the entry point. The other four commands inspect, verify, deploy and batch." },
+    { "type": "code", "label": "Claude Code", "text": "/repo-revamp:revamp my-old-project\n/repo-revamp:revamp-status my-old-project\n/repo-revamp:revamp-verify <url-or-dir>\n/repo-revamp:revamp-deploy my-old-project github-pages\n/repo-revamp:revamp-batch repo-one repo-two --dry-run" },
+    { "type": "p", "text": "Each command takes the argument its own hint names: a repository for `revamp`, `revamp-status` and `revamp-deploy`; a URL or a local directory for `revamp-verify`; one or more repositories for `revamp-batch`." },
+    { "type": "h2", "text": "The state file" },
+    { "type": "p", "text": "At every phase boundary the skill writes `_revamp/<repo>/STATE.md`. It is the first file a resumed session reads, and it is what makes a crash survivable. The template ships with the plugin; this is the top of the file, exactly as it ships:" },
+    { "type": "code", "label": "skills/repo-revamp/references/templates/STATE.template.md (first 22 lines)", "text": "# STATE — <repo>\n\nUpdated at every phase boundary. A fresh session reads this first.\n\n## Identity\n\n- Repository: `<owner>/<repo>`\n- Visibility: `<public | private>`\n- Default branch: `<branch>` at `<sha>`\n- Site branch: `<branch>` at `<sha>`\n- Base SHA for the boundary diff: `<sha>`\n- Host: `<GitHub Pages | Cloudflare Pages>`\n- Subdomain: `<sub>.<zone>`\n- Live URL: `<url>`\n- Shape: `<product | docs | research>`\n- Mode: `<presentation-only | rebuild>`\n\n## Phase\n\n- Current phase: `<0 INTAKE | 1 SPEC | 2 BUILD | 3 REVIEW | 4 DEPLOY | 5 SEO | 6 SHIP | 7 CLOSE>`\n- Started: `<date>`\n- Last updated: `<date time>`" },
+    { "type": "p", "text": "The rest of the file is the gate table, the open questions for the owner, the agent table, the leftovers and the next action. The gate table is the part that matters most: each row names a check, its state and the evidence line, so a resumed session can see exactly which proof is missing." },
+    { "type": "p", "text": "The file is internal. It lives outside the repository, beside it, so nothing about the process is ever committed to the site." },
+    { "type": "h2", "text": "When a phase gate fails" },
+    { "type": "p", "text": "A failed gate is not a reason to move on. The playbook treats it as a stop: the phase stays open, the failure is recorded with its evidence line, and the fix happens at the source. If the gate cannot be run at all, that is also a stop, because an unrun check is not a pass." },
+    { "type": "p", "text": "The same rule applies to the agent's report. A claim that the site is deployed, that a screenshot was reviewed or that a link resolves is a hypothesis until the orchestrator runs the check. The report separates CONFIRMED, UNVERIFIED and NOT DONE, and it leads with the negative when the news is negative." },
+    { "type": "h2", "text": "What you should see" },
+    { "type": "p", "text": "The first phase ends with a recon file and no repository change. The second ends with a spec and a decisions block. The third ends with a branch, a generated `docs/` directory, a green gate and a draft pull request. If any of those is missing, the phase is not finished, whatever the agent says." },
+    { "type": "p", "text": "The `revamp-status` command prints the phase, the gates, the open questions and the leftovers in five lines. Run it after every pause." },
+    { "type": "h2", "text": "Where the depth is" },
+    { "type": "p", "text": "Each phase has a reference file with the detail: `01-intake.md`, `02-spec.md`, `03-build.md` and so on through `16-maintenance.md`. Read the one for the phase you are in, not all of them at once." },
+    {
+      "type": "cta",
+      "items": [
+        { "label": "The phases", "href": "/phases/", "style": "primary" },
+        { "label": "The gates", "href": "/gates/", "style": "secondary" }
+      ]
+    }
+  ],
+  "claims": [
+    { "claim": "The revamp command is /repo-revamp:revamp <repo-or-path>.", "evidence": "commands/revamp.md", "status": "verified" },
+    { "claim": "INTAKE is read-only and writes RECON.md.", "evidence": "skills/repo-revamp/references/01-intake.md", "status": "verified" },
+    { "claim": "SPEC writes numbered questions with a recommendation each and appends a binding USER DECISIONS block.", "evidence": "skills/repo-revamp/references/02-spec.md", "status": "verified" },
+    { "claim": "One implementer builds in its own worktree, commits, pushes and opens a draft pull request, and never merges or deploys.", "evidence": "agents/site-builder.md", "status": "verified" },
+    { "claim": "The orchestrator verifies the product boundary, the gate on a clean worktree, the local serve, the browser matrix and a page screenshot.", "evidence": "skills/repo-revamp/references/11-verification.md", "status": "verified" },
+    { "claim": "The state file is _revamp/<repo>/STATE.md and is written at every phase boundary.", "evidence": "skills/repo-revamp/SKILL.md", "status": "verified" },
+    { "claim": "The state file template ships with the plugin.", "evidence": "skills/repo-revamp/references/templates/STATE.template.md", "status": "verified" },
+    { "claim": "The five commands are revamp, revamp-status, revamp-verify, revamp-deploy and revamp-batch.", "evidence": "commands/revamp.md; commands/revamp-status.md; commands/revamp-verify.md; commands/revamp-deploy.md; commands/revamp-batch.md", "status": "verified" },
+    { "claim": "revamp-status prints the phase, gates, open questions and leftovers in five lines.", "evidence": "commands/revamp-status.md; skills/repo-revamp/SKILL.md", "status": "verified" },
+    { "claim": "The reference files run from 01-intake.md to 16-maintenance.md.", "evidence": "skills/repo-revamp/references/01-intake.md; skills/repo-revamp/references/16-maintenance.md", "status": "verified" }
+  ]
+}

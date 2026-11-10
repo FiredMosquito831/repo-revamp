@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 700" role="img" aria-labelledby="gp-title gp-desc" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif">
+  <title id="gp-title">The gate pipeline</title>
+  <desc id="gp-desc">Eleven gates run in order and fail fast: secret scan, forbidden strings, links, page metadata, alt text, JSON-LD, sitemap, the social image size, tokens only, the revision-2 content gates, and the site gates. A red cross beside every gate marks a failure that stops the build before anything is written.</desc>
+  <defs>
+    <marker id="gp-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#F85149"/>
+    </marker>
+  </defs>
+
+  <text x="20" y="30" fill="#E6EDF3" font-size="19" font-weight="700">The gate pipeline</text>
+  <text x="20" y="50" fill="#9FB0C0" font-size="13">Every gate runs before anything is written. The first failure stops the build.</text>
+
+  <g font-size="15">
+    <g>
+      <rect x="40" y="72" width="560" height="38" rx="8" fill="#111821" stroke="#6B7B92" stroke-width="1.5"/>
+      <circle cx="64" cy="91" r="11" fill="#18212C" stroke="#6B7B92" stroke-width="1.5"/>
+      <text x="64" y="96" fill="#E6EDF3" font-size="12" font-weight="700" text-anchor="middle">1</text>
+      <text x="88" y="96" fill="#E6EDF3">Secret scan</text>
+      <text x="612" y="96" fill="#F85149" font-size="16" font-weight="700">✕</text>
+    </g>
+    <g>
+      <rect x="40" y="120" width="560" height="38" rx="8" fill="#111821" stroke="#6B7B92" stroke-width="1.5"/>
+      <circle cx="64" cy="139" r="11" fill="#18212C" stroke="#6B7B92" stroke-width="1.5"/>
+      <text x="64" y="144" fill="#E6EDF3" font-size="12" font-weight="700" text-anchor="middle">2</text>
+      <text x="88" y="144" fill="#E6EDF3">Forbidden strings</text>
+      <text x="612" y="144" fill="#F85149" font-size="16" font-weight="700">✕</text>
+    </g>
+    <g>
+      <rect x="40" y="168" width="560" height="38" rx="8" fill="#111821" stroke="#6B7B92" stroke-width="1.5"/>
+      <circle cx="64" cy="187" r="11" fill="#18212C" stroke="#6B7B92" stroke-width="1.5"/>
+      <text x="64" y="192" fill="#E6EDF3" font-size="12" font-weight="700" text-anchor="middle">3</text>
+      <text x="88" y="192" fill="#E6EDF3">Internal links and fragments</text>
+      <text x="612" y="192" fill="#F85149" font-size="16" font-weight="700">✕</text>
+    </g>
+    <g>
+      <rect x="40" y="216" width="560" height="38" rx="8" fill="#111821" stroke="#6B7B92" stroke-width="1.5"/>
+      <circle cx="64" cy="235" r="11" fill="#18212C" stroke="#6B7B92" stroke-width="1.5"/>
+      <text x="64" y="240" fill="#E6EDF3" font-size="12" font-weight="700" text-anchor="middle">4</text>
+      <text x="88" y="240" fill="#E6EDF3">Page metadata: one h1, title, description, canonical</text>
+      <text x="612" y="240" fill="#F85149" font-size="16" font-weight="700">✕</text>
+    </g>
+    <g>
+      <rect x="40" y="264" width="560" height="38" rx="8" fill="#111821" stroke="#6B7B92" stroke-width="1.5"/>
+      <circle cx="64" cy="283" r="11" fill="#18212C" stroke="#6B7B92" stroke-width="1.5"/>
+      <text x="64" y="288" fill="#E6EDF3" font-size="12" font-weight="700" text-anchor="middle">5</text>
+      <text x="88" y="288" fill="#E6EDF3">Alt text on every image</text>
+      <text x="612" y="288" fill="#F85149" font-size="16" font-weight="700">✕</text>
+    </g>
+    <g>
+      <rect x="40" y="312" width="560" height="38" rx="8" fill="#111821" stroke="#6B7B92" stroke-width="1.5"/>
+      <circle cx="64" cy="331" r="11" fill="#18212C" stroke="#6B7B92" stroke-width="1.5"/>
+      <text x="64" y="336" fill="#E6EDF3" font-size="12" font-weight="700" text-anchor="middle">6</text>
+      <text x="88" y="336" fill="#E6EDF3">JSON-LD parses</text>
+      <text x="612" y="336" fill="#F85149" font-size="16" font-weight="700">✕</text>
+    </g>
+    <g>
+      <rect x="40" y="360" width="560" height="38" rx="8" fill="#111821" stroke="#6B7B92" stroke-width="1.5"/>
+      <circle cx="64" cy="379" r="11" fill="#18212C" stroke="#6B7B92" stroke-width="1.5"/>
+      <text x="64" y="384" fill="#E6EDF3" font-size="12" font-weight="700" text-anchor="middle">7</text>
+      <text x="88" y="384" fill="#E6EDF3">Every sitemap URL has a file</text>
+      <text x="612" y="384" fill="#F85149" font-size="16" font-weight="700">✕</text>
+    </g>
+    <g>
+      <rect x="40" y="408" width="560" height="38" rx="8" fill="#111821" stroke="#6B7B92" stroke-width="1.5"/>
+      <circle cx="64" cy="427" r="11" fill="#18212C" stroke="#6B7B92" stroke-width="1.5"/>
+      <text x="64" y="432" fill="#E6EDF3" font-size="12" font-weight="700" text-anchor="middle">8</text>
+      <text x="88" y="432" fill="#E6EDF3">Social image is exactly 1200 by 630</text>
+      <text x="612" y="432" fill="#F85149" font-size="16" font-weight="700">✕</text>
+    </g>
+    <g>
+      <rect x="40" y="456" width="560" height="38" rx="8" fill="#111821" stroke="#6B7B92" stroke-width="1.5"/>
+      <circle cx="64" cy="475" r="11" fill="#18212C" stroke="#6B7B92" stroke-width="1.5"/>
+      <text x="64" y="480" fill="#E6EDF3" font-size="12" font-weight="700" text-anchor="middle">9</text>
+      <text x="88" y="480" fill="#E6EDF3">Colours come from the tokens</text>
+      <text x="612" y="480" fill="#F85149" font-size="16" font-weight="700">✕</text>
+    </g>
+    <g>
+      <rect x="40" y="504" width="560" height="38" rx="8" fill="#111821" stroke="#6B7B92" stroke-width="1.5"/>
+      <circle cx="64" cy="523" r="11" fill="#18212C" stroke="#6B7B92" stroke-width="1.5"/>
+      <text x="64" y="528" fill="#E6EDF3" font-size="12" font-weight="700" text-anchor="middle">10</text>
+      <text x="88" y="528" fill="#E6EDF3">Content gates: word counts, diagrams, reference</text>
+      <text x="612" y="528" fill="#F85149" font-size="16" font-weight="700">✕</text>
+    </g>
+    <g>
+      <rect x="40" y="552" width="560" height="38" rx="8" fill="#18212C" stroke="#3FB950" stroke-width="2"/>
+      <circle cx="64" cy="571" r="11" fill="#3FB950"/>
+      <text x="64" y="576" fill="#04130A" font-size="12" font-weight="700" text-anchor="middle">11</text>
+      <text x="88" y="576" fill="#E6EDF3">Site gates: CNAME, legal texts, no external requests, no internal process, claims</text>
+      <text x="612" y="576" fill="#F85149" font-size="16" font-weight="700">✕</text>
+    </g>
+  </g>
+
+  <!-- fail line -->
+  <line x1="630" y1="91" x2="630" y2="571" stroke="#F85149" stroke-width="1.5" stroke-dasharray="5 5"/>
+  <line x1="640" y1="331" x2="672" y2="331" stroke="#F85149" stroke-width="2" marker-end="url(#gp-arrow)"/>
+  <text x="682" y="326" fill="#E6EDF3" font-size="13" font-weight="600">fail</text>
+  <text x="682" y="344" fill="#9FB0C0" font-size="12">the build stops</text>
+  <text x="682" y="362" fill="#9FB0C0" font-size="12">nothing is written</text>
+
+  <!-- pass path -->
+  <line x1="320" y1="590" x2="320" y2="614" stroke="#3FB950" stroke-width="2" marker-end="url(#gp-arrow)"/>
+  <text x="332" y="612" fill="#3FB950" font-size="13" font-weight="600">all pass</text>
+  <text x="404" y="612" fill="#9FB0C0" font-size="13">docs/ is written</text>
+
+  <!-- legend -->
+  <g>
+    <rect x="20" y="640" width="860" height="1" fill="#6B7B92"/>
+    <rect x="30" y="656" width="16" height="16" rx="3" fill="#111821" stroke="#6B7B92"/>
+    <text x="54" y="669" fill="#9FB0C0" font-size="12">gate, in order</text>
+    <text x="180" y="669" fill="#F85149" font-size="15" font-weight="700">✕</text>
+    <text x="200" y="669" fill="#9FB0C0" font-size="12">failure stops the build</text>
+    <rect x="380" y="656" width="16" height="16" rx="3" fill="#18212C" stroke="#3FB950" stroke-width="2"/>
+    <text x="404" y="669" fill="#9FB0C0" font-size="12">the site-specific gates</text>
+  </g>
+</svg>

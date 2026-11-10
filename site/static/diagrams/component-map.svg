@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 660" role="img" aria-labelledby="cm-title cm-desc" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif">
+  <title id="cm-title">The repo-revamp component map</title>
+  <desc id="cm-desc">The plugin at the centre, surrounded by the parts it ships: one skill, {{ references }} reference files, {{ templates }} templates, {{ commands }} commands, {{ agents }} agents, {{ plugin_scripts }} scripts, the danube-labs marketplace, and the host that serves the generated site. The host is drawn with a dashed border because it is external to the repository.</desc>
+  <defs>
+    <marker id="cm-dot" viewBox="0 0 6 6" refX="3" refY="3" markerWidth="4" markerHeight="4">
+      <circle cx="3" cy="3" r="2" fill="#6B7B92"/>
+    </marker>
+  </defs>
+
+  <text x="20" y="30" fill="#E6EDF3" font-size="19" font-weight="700">What the plugin ships</text>
+  <text x="20" y="50" fill="#9FB0C0" font-size="13">One repository, one marketplace entry, one generated site.</text>
+
+  <!-- connectors -->
+  <g stroke="#6B7B92" stroke-width="1.5" fill="none">
+    <path d="M 225 113 L 360 300"/>
+    <path d="M 480 106 L 480 280"/>
+    <path d="M 735 113 L 600 300"/>
+    <path d="M 750 320 L 600 320"/>
+    <path d="M 735 527 L 600 340"/>
+    <path d="M 480 534 L 480 360"/>
+    <path d="M 225 527 L 360 340"/>
+    <path d="M 210 320 L 360 320"/>
+  </g>
+
+  <!-- centre -->
+  <rect x="360" y="280" width="240" height="80" rx="14" fill="#18212C" stroke="#3FB950" stroke-width="2"/>
+  <text x="480" y="314" fill="#E6EDF3" font-size="21" font-weight="700" text-anchor="middle" font-family="ui-monospace, Consolas, monospace">repo-revamp</text>
+  <text x="480" y="338" fill="#9FB0C0" font-size="13" text-anchor="middle">Claude Code plugin</text>
+
+  <!-- satellites -->
+  <g>
+    <rect x="30" y="70" width="195" height="66" rx="10" fill="#111821" stroke="#6B7B92" stroke-width="1.5"/>
+    <text x="48" y="98" fill="#E6EDF3" font-size="16" font-weight="600">skill</text>
+    <text x="48" y="120" fill="#9FB0C0" font-size="12" font-family="ui-monospace, Consolas, monospace">SKILL.md</text>
+  </g>
+  <g>
+    <rect x="382" y="40" width="196" height="66" rx="10" fill="#111821" stroke="#6B7B92" stroke-width="1.5"/>
+    <text x="400" y="68" fill="#E6EDF3" font-size="16" font-weight="600">{{ references }} references</text>
+    <text x="400" y="90" fill="#9FB0C0" font-size="12" font-family="ui-monospace, Consolas, monospace">00 to 16</text>
+  </g>
+  <g>
+    <rect x="735" y="70" width="195" height="66" rx="10" fill="#111821" stroke="#6B7B92" stroke-width="1.5"/>
+    <text x="753" y="98" fill="#E6EDF3" font-size="16" font-weight="600">{{ templates }} templates</text>
+    <text x="753" y="120" fill="#9FB0C0" font-size="12" font-family="ui-monospace, Consolas, monospace">state, spec, briefs</text>
+  </g>
+  <g>
+    <rect x="750" y="287" width="195" height="66" rx="10" fill="#111821" stroke="#6B7B92" stroke-width="1.5"/>
+    <text x="768" y="315" fill="#E6EDF3" font-size="16" font-weight="600">{{ commands }} commands</text>
+    <text x="768" y="337" fill="#9FB0C0" font-size="12" font-family="ui-monospace, Consolas, monospace">slash commands</text>
+  </g>
+  <g>
+    <rect x="735" y="494" width="195" height="66" rx="10" fill="#111821" stroke="#6B7B92" stroke-width="1.5"/>
+    <text x="753" y="522" fill="#E6EDF3" font-size="16" font-weight="600">{{ agents }} agents</text>
+    <text x="753" y="544" fill="#9FB0C0" font-size="12" font-family="ui-monospace, Consolas, monospace">build, recon, verify</text>
+  </g>
+  <g>
+    <rect x="382" y="534" width="196" height="66" rx="10" fill="#111821" stroke="#6B7B92" stroke-width="1.5"/>
+    <text x="400" y="562" fill="#E6EDF3" font-size="16" font-weight="600">{{ plugin_scripts }} scripts</text>
+    <text x="400" y="584" fill="#9FB0C0" font-size="12" font-family="ui-monospace, Consolas, monospace">verify, inventory, validate</text>
+  </g>
+  <g>
+    <rect x="30" y="494" width="195" height="66" rx="10" fill="#111821" stroke="#6B7B92" stroke-width="1.5"/>
+    <text x="48" y="522" fill="#E6EDF3" font-size="16" font-weight="600">marketplace</text>
+    <text x="48" y="544" fill="#9FB0C0" font-size="12" font-family="ui-monospace, Consolas, monospace">danube-labs</text>
+  </g>
+  <g>
+    <rect x="15" y="287" width="195" height="66" rx="10" fill="#111821" stroke="#6B7B92" stroke-width="1.5" stroke-dasharray="6 4"/>
+    <text x="33" y="315" fill="#E6EDF3" font-size="16" font-weight="600">host</text>
+    <text x="33" y="337" fill="#9FB0C0" font-size="12" font-family="ui-monospace, Consolas, monospace">GitHub Pages</text>
+  </g>
+
+  <!-- legend -->
+  <g>
+    <rect x="20" y="620" width="920" height="1" fill="#6B7B92"/>
+    <rect x="30" y="632" width="16" height="16" rx="3" fill="#111821" stroke="#6B7B92"/>
+    <text x="54" y="645" fill="#9FB0C0" font-size="12">in the repository</text>
+    <rect x="180" y="632" width="16" height="16" rx="3" fill="#111821" stroke="#6B7B92" stroke-dasharray="4 3"/>
+    <text x="204" y="645" fill="#9FB0C0" font-size="12">external host</text>
+    <line x1="330" y1="640" x2="358" y2="640" stroke="#6B7B92" stroke-width="1.5" marker-end="url(#cm-dot)"/>
+    <text x="366" y="645" fill="#9FB0C0" font-size="12">belongs to the plugin</text>
+  </g>
+</svg>

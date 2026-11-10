@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quick start | repo-revamp</title>
+<meta name="description" content="Run your first revamp in numbered steps: start the command, answer the spec questions, watch the phases, and read the state file at every boundary.">
+<link rel="canonical" href="https://reporevamp.danubelabs.net/quick-start/">
+<meta name="theme-color" content="#0B0F14">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="repo-revamp">
+<meta property="og:title" content="Quick start | repo-revamp">
+<meta property="og:description" content="Run your first revamp in numbered steps: start the command, answer the spec questions, watch the phases, and read the state file at every boundary.">
+<meta property="og:url" content="https://reporevamp.danubelabs.net/quick-start/">
+<meta property="og:image" content="https://reporevamp.danubelabs.net/og.png">
+<meta property="og:image:alt" content="repo-revamp: the playbook that turns a repository into a live, documented, search-indexed site.">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Quick start | repo-revamp">
+<meta name="twitter:description" content="Run your first revamp in numbered steps: start the command, answer the spec questions, watch the phases, and read the state file at every boundary.">
+<meta name="twitter:image" content="https://reporevamp.danubelabs.net/og.png">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Your first revamp","url":"https://reporevamp.danubelabs.net/quick-start/","description":"Run your first revamp in numbered steps: start the command, answer the spec questions, watch the phases, and read the state file at every boundary."}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://reporevamp.danubelabs.net/"},{"@type":"ListItem","position":2,"name":"Quick start","item":"https://reporevamp.danubelabs.net/quick-start/"}]}</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="/">
+      <img class="brand-mark" src="/favicon.svg" alt="repo-revamp" width="30" height="30">
+      <span class="brand-name">repo-revamp</span>
+      <span class="brand-tag">v1.0.1</span>
+    </a>
+    <nav class="site-nav" aria-label="Primary">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/install/">Install</a></li>
+        <li><a href="/quick-start/" aria-current="page">Quick start</a></li>
+        <li><a href="/phases/">Phases</a></li>
+        <li><a href="/gates/">Gates</a></li>
+        <li><a href="/screenshots/">Screenshots</a></li>
+        <li><a href="/deployment/">Deployment</a></li>
+        <li><a href="/orchestration/">Orchestration</a></li>
+        <li><a href="/reference/">Reference</a></li>
+        <li><a href="/faq/">FAQ</a></li>
+        <li><a href="/about/">About</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+<main id="main" class="site-main">
+<article class="page">
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <ol>
+      <li><a href="/">Home</a></li>
+      <li><span aria-current="page">Quick start</span></li>
+    </ol>
+  </nav>
+  <header class="page-head">
+    <p class="eyebrow">Walkthrough</p>
+    <h1>Your first revamp</h1>
+    <p class="lead">Six steps from an installed plugin to a verified, deployed site. Each step names the phase it belongs to and the file it leaves behind.</p>
+  </header>
+  <div class="page-grid">
+    <nav class="toc" aria-label="On this page">
+      <p class="toc-title">On this page</p>
+      <ol>
+        <li><a href="#the-six-steps">The six steps</a></li>
+        <li><a href="#what-the-commands-look-like">What the commands look like</a></li>
+        <li><a href="#the-state-file">The state file</a></li>
+        <li><a href="#when-a-phase-gate-fails">When a phase gate fails</a></li>
+        <li><a href="#what-you-should-see">What you should see</a></li>
+        <li><a href="#where-the-depth-is">Where the depth is</a></li>
+      </ol>
+    </nav>
+    <div class="prose">
+<p>A revamp is deliberately front-loaded: the first two phases are read-only, and nothing is built until the owner has answered the spec questions. That is what keeps a presentation change from turning into a product change.</p>
+<h2 id="the-six-steps">The six steps</h2>
+<ol class="steps"><li><span class="step-title">Start the command</span><span class="step-text">Run <code>/repo-revamp:revamp my-old-project</code> with a repository name or a local path. The skill loads and the state machine starts at INTAKE.</span></li><li><span class="step-title">Read the recon</span><span class="step-text">The agent investigates read-only and writes <code>_revamp/&lt;repo&gt;/RECON.md</code>: the facts, the feature and configuration inventory, the hosting options and the risks. No file in the repository is touched.</span></li><li><span class="step-title">Answer the spec</span><span class="step-text">The agent writes <code>SPEC.md</code> with numbered questions and a recommendation for each. The owner answers in one line per question; the answers are appended as a binding <code>USER DECISIONS</code> block.</span></li><li><span class="step-title">Let one agent build</span><span class="step-text">One implementer works in its own worktree on its own branch. It builds the generated site in <code>docs/</code>, runs the gate, commits in logical steps and opens a draft pull request. It never merges and never deploys.</span></li><li><span class="step-title">Verify before relaying</span><span class="step-text">The orchestrator re-anchors, runs the boundary diff and the gate on a clean worktree, serves the site locally, runs the browser matrix and looks at a page screenshot. An agent's claim is a hypothesis until then.</span></li><li><span class="step-title">Deploy on the owner's go</span><span class="step-text">The owner does the steps only an owner can do: authorise the host, create the DNS record, approve the certificate. Then the live URLs, the sitemap and the served commit are checked.</span></li></ol>
+<h2 id="what-the-commands-look-like">What the commands look like</h2>
+<p>The revamp command is the entry point. The other four commands inspect, verify, deploy and batch.</p>
+<figure class="code-block"><figcaption>Claude Code</figcaption><pre><code>/repo-revamp:revamp my-old-project
+/repo-revamp:revamp-status my-old-project
+/repo-revamp:revamp-verify &lt;url-or-dir&gt;
+/repo-revamp:revamp-deploy my-old-project github-pages
+/repo-revamp:revamp-batch repo-one repo-two --dry-run</code></pre></figure>
+<p>Each command takes the argument its own hint names: a repository for <code>revamp</code>, <code>revamp-status</code> and <code>revamp-deploy</code>; a URL or a local directory for <code>revamp-verify</code>; one or more repositories for <code>revamp-batch</code>.</p>
+<h2 id="the-state-file">The state file</h2>
+<p>At every phase boundary the skill writes <code>_revamp/&lt;repo&gt;/STATE.md</code>. It is the first file a resumed session reads, and it is what makes a crash survivable. The template ships with the plugin; this is the top of the file, exactly as it ships:</p>
+<figure class="code-block"><figcaption>skills/repo-revamp/references/templates/STATE.template.md (first 22 lines)</figcaption><pre><code># STATE — &lt;repo&gt;
+
+Updated at every phase boundary. A fresh session reads this first.
+
+## Identity
+
+- Repository: `&lt;owner&gt;/&lt;repo&gt;`
+- Visibility: `&lt;public | private&gt;`
+- Default branch: `&lt;branch&gt;` at `&lt;sha&gt;`
+- Site branch: `&lt;branch&gt;` at `&lt;sha&gt;`
+- Base SHA for the boundary diff: `&lt;sha&gt;`
+- Host: `&lt;GitHub Pages | Cloudflare Pages&gt;`
+- Subdomain: `&lt;sub&gt;.&lt;zone&gt;`
+- Live URL: `&lt;url&gt;`
+- Shape: `&lt;product | docs | research&gt;`
+- Mode: `&lt;presentation-only | rebuild&gt;`
+
+## Phase
+
+- Current phase: `&lt;0 INTAKE | 1 SPEC | 2 BUILD | 3 REVIEW | 4 DEPLOY | 5 SEO | 6 SHIP | 7 CLOSE&gt;`
+- Started: `&lt;date&gt;`
+- Last updated: `&lt;date time&gt;`</code></pre></figure>
+<p>The rest of the file is the gate table, the open questions for the owner, the agent table, the leftovers and the next action. The gate table is the part that matters most: each row names a check, its state and the evidence line, so a resumed session can see exactly which proof is missing.</p>
+<p>The file is internal. It lives outside the repository, beside it, so nothing about the process is ever committed to the site.</p>
+<h2 id="when-a-phase-gate-fails">When a phase gate fails</h2>
+<p>A failed gate is not a reason to move on. The playbook treats it as a stop: the phase stays open, the failure is recorded with its evidence line, and the fix happens at the source. If the gate cannot be run at all, that is also a stop, because an unrun check is not a pass.</p>
+<p>The same rule applies to the agent's report. A claim that the site is deployed, that a screenshot was reviewed or that a link resolves is a hypothesis until the orchestrator runs the check. The report separates CONFIRMED, UNVERIFIED and NOT DONE, and it leads with the negative when the news is negative.</p>
+<h2 id="what-you-should-see">What you should see</h2>
+<p>The first phase ends with a recon file and no repository change. The second ends with a spec and a decisions block. The third ends with a branch, a generated <code>docs/</code> directory, a green gate and a draft pull request. If any of those is missing, the phase is not finished, whatever the agent says.</p>
+<p>The <code>revamp-status</code> command prints the phase, the gates, the open questions and the leftovers in five lines. Run it after every pause.</p>
+<h2 id="where-the-depth-is">Where the depth is</h2>
+<p>Each phase has a reference file with the detail: <code>01-intake.md</code>, <code>02-spec.md</code>, <code>03-build.md</code> and so on through <code>16-maintenance.md</code>. Read the one for the phase you are in, not all of them at once.</p>
+<div class="hero-actions"><a class="btn btn-primary" href="/phases/">The phases</a><a class="btn btn-secondary" href="/gates/">The gates</a></div>
+    </div>
+  </div>
+</article>
+</main>
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <nav class="footer-nav" aria-label="Footer">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/install/">Install</a></li>
+        <li><a href="/reference/">Reference</a></li>
+        <li><a href="/faq/">FAQ</a></li>
+        <li><a href="/license/">License</a></li>
+        <li><a href="https://github.com/FiredMosquito831/repo-revamp">GitHub</a></li>
+      </ul>
+    </nav>
+    <p class="legal">repo-revamp is an independent project. It is not affiliated with, endorsed by, or sponsored by Anthropic. Claude and Claude Code are trademarks of Anthropic.</p>
+    <p class="legal">Licensed under the MIT License.</p>
+    <p class="legal muted">Copyright 2026 Danube Labs. Built from the plugin's own playbook.</p>
+  </div>
+</footer>
+<script src="/assets/site.js" defer></script>
+</body>
+</html>

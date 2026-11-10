@@ -1,0 +1,38 @@
+[
+  {
+    "slug": "plugin-details",
+    "area": "install",
+    "alt": "Terminal output of claude plugin details repo-revamp, listing version 1.0.1, six skills, three agents, no hooks or MCP servers, and the per-component token estimates.",
+    "caption": "The installed plugin's own inventory: six skills, three agents, and the token cost it adds to every session.",
+    "source": "claude plugin details repo-revamp",
+    "verdict": "INCLUDE",
+    "redacted": true,
+    "width": 1600,
+    "height": 1075,
+    "callouts": []
+  },
+  {
+    "slug": "plugin-validate",
+    "area": "install",
+    "alt": "Terminal output of claude plugin validate . --strict, reporting that the marketplace manifest and the plugin directory checks found nothing to report and that validation passed.",
+    "caption": "The plugin validates cleanly with the strict flag; the checkout path is redacted.",
+    "source": "claude plugin validate . --strict",
+    "verdict": "INCLUDE",
+    "redacted": true,
+    "width": 1600,
+    "height": 636,
+    "callouts": []
+  },
+  {
+    "slug": "plugin-self-check",
+    "area": "gates",
+    "alt": "Terminal output of the repository validator, with one PASS line for the manifest, the skill, each of the five commands, each of the three agents, the reference files, the unfilled slots and the scripts, ending with all checks passed.",
+    "caption": "The repository's own validator: one PASS line per component, then all checks passed.",
+    "source": "python scripts/validate_plugin.py",
+    "verdict": "INCLUDE",
+    "redacted": true,
+    "width": 1600,
+    "height": 667,
+    "callouts": []
+  }
+]

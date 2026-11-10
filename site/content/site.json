@@ -1,0 +1,57 @@
+{
+  "name": "repo-revamp",
+  "url": "https://reporevamp.danubelabs.net",
+  "host": "reporevamp.danubelabs.net",
+  "lastmod": "2026-11-10",
+  "locale": "en_US",
+  "og_alt": "repo-revamp: the playbook that turns a repository into a live, documented, search-indexed site.",
+  "github": "https://github.com/FiredMosquito831/repo-revamp",
+  "author": {
+    "name": "Danube Labs",
+    "url": "https://github.com/FiredMosquito831"
+  },
+  "legal": {
+    "non_affiliation": "repo-revamp is an independent project. It is not affiliated with, endorsed by, or sponsored by Anthropic. Claude and Claude Code are trademarks of Anthropic.",
+    "license": "Licensed under the MIT License."
+  },
+  "feature_list": [
+    "Phase state machine with an exit gate per phase",
+    "Deterministic site builder with hard gates",
+    "Reviewed screenshot pipeline with redaction and a manifest",
+    "Design tokens with computed contrast",
+    "Per-page SEO, JSON-LD, sitemap and a 1200 by 630 social image",
+    "GitHub Pages and Cloudflare Pages deployment",
+    "Verification recipe with CONFIRMED, UNVERIFIED and NOT DONE"
+  ],
+  "nav": [
+    { "label": "Home", "path": "/" },
+    { "label": "Install", "path": "/install/" },
+    { "label": "Quick start", "path": "/quick-start/" },
+    { "label": "Phases", "path": "/phases/" },
+    { "label": "Gates", "path": "/gates/" },
+    { "label": "Screenshots", "path": "/screenshots/" },
+    { "label": "Deployment", "path": "/deployment/" },
+    { "label": "Orchestration", "path": "/orchestration/" },
+    { "label": "Reference", "path": "/reference/" },
+    { "label": "FAQ", "path": "/faq/" },
+    { "label": "About", "path": "/about/" }
+  ],
+  "footer": [
+    { "label": "Home", "path": "/" },
+    { "label": "Install", "path": "/install/" },
+    { "label": "Reference", "path": "/reference/" },
+    { "label": "FAQ", "path": "/faq/" },
+    { "label": "License", "path": "/license/" },
+    { "label": "GitHub", "path": "https://github.com/FiredMosquito831/repo-revamp" }
+  ],
+  "phases": [
+    { "name": "INTAKE", "gate": "RECON.md exists" },
+    { "name": "SPEC", "gate": "USER DECISIONS recorded" },
+    { "name": "BUILD", "gate": "gate green, draft PR open" },
+    { "name": "REVIEW", "gate": "V1–V16 green" },
+    { "name": "DEPLOY", "gate": "live URLs answer" },
+    { "name": "SEO", "gate": "sitemap submitted" },
+    { "name": "SHIP", "gate": "merged on the owner's go" },
+    { "name": "CLOSE", "gate": "tracker and handoff updated" }
+  ]
+}

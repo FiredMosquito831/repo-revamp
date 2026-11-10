@@ -1,0 +1,72 @@
+{
+  "slug": "gates",
+  "path": "/gates/",
+  "nav": "Gates",
+  "nav_order": 5,
+  "title": "Gates | repo-revamp",
+  "description": "The deterministic builder's gates: secret scan, forbidden strings, links, metadata, alt text, JSON-LD, sitemap, the social image, tokens and more.",
+  "h1": "The gates",
+  "eyebrow": "Build",
+  "lead": "The builder writes nothing until every gate passes. The first failure stops the build, prints the file and the line, and leaves docs/ untouched.",
+  "priority": "0.8",
+  "words": [900, 1400],
+  "toc": true,
+  "sections": [
+    { "type": "p", "text": "A gate that cannot fail is not a gate. Each one below is a check the builder runs against the rendered output, not a promise in a document. The build is deterministic, so the same inputs produce the same bytes and the same verdict." },
+    { "type": "figure", "diagram": "gate-pipeline", "caption": "The gates run in order and fail fast; nothing is written until all of them pass.", "text_alt": "Eleven gates in order: secret scan, forbidden strings, internal links and fragments, page metadata, alt text, JSON-LD, sitemap files, the social image size, tokens only, the content gates for word counts, diagrams and the generated reference, and the site gates for CNAME, legal texts, external requests, internal process and the claims ledger. A failure at any gate stops the build before anything is written." },
+    { "type": "h2", "text": "The ten core gates" },
+    {
+      "type": "table",
+      "caption": "The gates the playbook prescribes, in order",
+      "head": ["#", "Gate", "Fails when"],
+      "rows": [
+        ["1", "Secret scan", "A pattern matches a text file under site/ or docs/."],
+        ["2", "Forbidden strings", "A fixed list of unfinished-content markers appears anywhere."],
+        ["3", "Links", "An internal href or src does not resolve, or a fragment has no id."],
+        ["4", "Page metadata", "Not exactly one h1, a title over 60 characters, a description outside 120 to 160, or a duplicate."],
+        ["5", "Alt text", "An img has no non-empty alt."],
+        ["6", "JSON-LD", "A structured-data block does not parse."],
+        ["7", "Sitemap", "A URL in sitemap.xml has no file in docs/."],
+        ["8", "Social image", "og.png is missing or not exactly 1200 by 630."],
+        ["9", "Tokens", "A colour in the CSS, a template or a diagram is not a design token."],
+        ["10", "Content gates", "A page is outside its word range, a diagram lacks a title or description, or the generated reference is incomplete."]
+      ]
+    },
+    { "type": "h2", "text": "The site gates" },
+    { "type": "p", "text": "This site adds the checks its own job needs: the CNAME file must hold the bare hostname, the non-affiliation and licence texts must appear in every footer, no page may request an external resource, no internal process artifact may leak into the output, and every page must carry a claims list whose evidence resolves to a real file." },
+    { "type": "p", "text": "The reference page has a gate of its own: the builder reads the commands, agents, references, templates and scripts from the repository, renders one entry per file with a stable anchor, and fails if a listed file is missing, a family is empty, or the rendered entry count differs from the real file count." },
+    { "type": "h2", "text": "The secret scan" },
+    { "type": "p", "text": "The scan covers every text file under `site/` and `docs/`: HTML, JSON, JSON-LD, the sitemap, the manifest, alt text and captions. It looks for token shapes, key prefixes, service-role assignments, connection strings, credential assignments, email addresses, private IP addresses, hosted project references and owner file paths." },
+    { "type": "p", "text": "A hit is reported by file and line with the pattern name, never with the matched value. Zero hits is the only pass. An allowlist entry would need the owner's written approval and a comment saying why; this project has none." },
+    { "type": "h2", "text": "Determinism" },
+    { "type": "p", "text": "The build must be byte-identical across machines, checkouts and days. That rules out four things: the wall clock, git history, random identifiers and unordered iteration. The sitemap's last-modified date is a fixed value in the site data, updated deliberately. Slugs are derived from names. Every list is sorted and every file is written with LF newlines." },
+    { "type": "p", "text": "The proof is the check mode: it builds into a temporary directory, compares every file byte for byte with the committed `docs/`, prints the names that differ, and exits non-zero on any difference. It never writes to `docs/`." },
+    { "type": "code", "label": "The check", "text": "python scripts/build_site.py --check\ncheck: docs/ is byte-identical to a fresh build" },
+    { "type": "p", "text": "If the check reports differences on every page, the playbook says to suspect configuration before content: line endings from a checkout setting, a generated file that is ignored by git, stale committed output, or a date read from history." },
+    { "type": "h2", "text": "CI" },
+    { "type": "p", "text": "A workflow named Site check runs the same command on every pull request and on pushes that touch the site paths. It installs the pinned requirements and runs `python scripts/build_site.py --check`. The command is identical locally and in CI; if CI ran something else, the gate would not be the gate." },
+    { "type": "p", "text": "The existing plugin workflow is untouched. The site workflow is a new file, and it has read-only permissions." },
+    { "type": "h2", "text": "What the gates do not prove" },
+    { "type": "p", "text": "A gate proves that the output is internally consistent, not that every sentence is true. Truth comes from the claims ledger: one row per factual statement, with evidence that resolves to a file. A green build with a wrong number is still a wrong site, which is why the numbers are computed from the repository or recorded with the command that produced them." },
+    {
+      "type": "cta",
+      "items": [
+        { "label": "The phases", "href": "/phases/", "style": "secondary" },
+        { "label": "The screenshot pipeline", "href": "/screenshots/", "style": "primary" }
+      ]
+    }
+  ],
+  "claims": [
+    { "claim": "The builder writes nothing until every gate passes.", "evidence": "skills/repo-revamp/references/04-builder.md", "status": "verified" },
+    { "claim": "The ten gates are secret scan, forbidden strings, links, page metadata, alt text, JSON-LD, sitemap, social image, tokens and the content gates.", "evidence": "skills/repo-revamp/references/04-builder.md", "status": "verified" },
+    { "claim": "The secret scan reports file and line and never the matched value.", "evidence": "skills/repo-revamp/references/04-builder.md", "status": "verified" },
+    { "claim": "The secret scan covers every text file under site/ and docs/.", "evidence": "skills/repo-revamp/references/04-builder.md", "status": "verified" },
+    { "claim": "The build uses no wall clock, no git history and no randomness, and writes LF newlines.", "evidence": "skills/repo-revamp/references/04-builder.md", "status": "verified" },
+    { "claim": "The sitemap last-modified date is a fixed value in the site data.", "evidence": "site/content/site.json; skills/repo-revamp/references/04-builder.md", "status": "verified" },
+    { "claim": "The check mode builds into a temporary directory and compares every file byte for byte.", "evidence": "scripts/build_site.py; skills/repo-revamp/references/04-builder.md", "status": "verified" },
+    { "claim": "The site workflow runs python scripts/build_site.py --check with read-only permissions.", "evidence": ".github/workflows/site.yml", "status": "verified" },
+    { "claim": "The existing plugin workflow is not modified.", "evidence": ".github/workflows/validate.yml", "status": "verified" },
+    { "claim": "A green build does not prove that every sentence is true; the claims ledger does.", "evidence": "skills/repo-revamp/references/05-content-truth.md", "status": "verified" },
+    { "claim": "The reference page gate fails if a listed file is missing, a family is empty or the entry count drifts.", "evidence": "scripts/build_site.py", "status": "verified" }
+  ]
+}

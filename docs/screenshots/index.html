@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Screenshots | repo-revamp</title>
+<meta name="description" content="The screenshot pipeline: inventory, SHA-256 de-duplication, perceptual clustering, visual review, redaction on a copy, derivatives and a manifest.">
+<link rel="canonical" href="https://reporevamp.danubelabs.net/screenshots/">
+<meta name="theme-color" content="#0B0F14">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="repo-revamp">
+<meta property="og:title" content="Screenshots | repo-revamp">
+<meta property="og:description" content="The screenshot pipeline: inventory, SHA-256 de-duplication, perceptual clustering, visual review, redaction on a copy, derivatives and a manifest.">
+<meta property="og:url" content="https://reporevamp.danubelabs.net/screenshots/">
+<meta property="og:image" content="https://reporevamp.danubelabs.net/og.png">
+<meta property="og:image:alt" content="repo-revamp: the playbook that turns a repository into a live, documented, search-indexed site.">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Screenshots | repo-revamp">
+<meta name="twitter:description" content="The screenshot pipeline: inventory, SHA-256 de-duplication, perceptual clustering, visual review, redaction on a copy, derivatives and a manifest.">
+<meta name="twitter:image" content="https://reporevamp.danubelabs.net/og.png">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"The screenshot pipeline","url":"https://reporevamp.danubelabs.net/screenshots/","description":"The screenshot pipeline: inventory, SHA-256 de-duplication, perceptual clustering, visual review, redaction on a copy, derivatives and a manifest."}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://reporevamp.danubelabs.net/"},{"@type":"ListItem","position":2,"name":"Screenshots","item":"https://reporevamp.danubelabs.net/screenshots/"}]}</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="/">
+      <img class="brand-mark" src="/favicon.svg" alt="repo-revamp" width="30" height="30">
+      <span class="brand-name">repo-revamp</span>
+      <span class="brand-tag">v1.0.1</span>
+    </a>
+    <nav class="site-nav" aria-label="Primary">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/install/">Install</a></li>
+        <li><a href="/quick-start/">Quick start</a></li>
+        <li><a href="/phases/">Phases</a></li>
+        <li><a href="/gates/">Gates</a></li>
+        <li><a href="/screenshots/" aria-current="page">Screenshots</a></li>
+        <li><a href="/deployment/">Deployment</a></li>
+        <li><a href="/orchestration/">Orchestration</a></li>
+        <li><a href="/reference/">Reference</a></li>
+        <li><a href="/faq/">FAQ</a></li>
+        <li><a href="/about/">About</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+<main id="main" class="site-main">
+<article class="page">
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <ol>
+      <li><a href="/">Home</a></li>
+      <li><span aria-current="page">Screenshots</span></li>
+    </ol>
+  </nav>
+  <header class="page-head">
+    <p class="eyebrow">Images</p>
+    <h1>The screenshot pipeline</h1>
+    <p class="lead">A gallery is the most persuasive part of a product site and the easiest place to leak something. Every image is inventoried, de-duplicated, reviewed, redacted on a copy and recorded.</p>
+  </header>
+  <div class="page-grid">
+    <nav class="toc" aria-label="On this page">
+      <p class="toc-title">On this page</p>
+      <ol>
+        <li><a href="#1-inventory">1. Inventory</a></li>
+        <li><a href="#2-exact-duplicates">2. Exact duplicates</a></li>
+        <li><a href="#3-near-duplicates">3. Near-duplicates</a></li>
+        <li><a href="#4-contact-sheets-and-review">4. Contact sheets and review</a></li>
+        <li><a href="#5-verdicts">5. Verdicts</a></li>
+        <li><a href="#6-redaction">6. Redaction</a></li>
+        <li><a href="#7-derivatives">7. Derivatives</a></li>
+        <li><a href="#8-the-manifest">8. The manifest</a></li>
+        <li><a href="#9-alt-text-and-captions">9. Alt text and captions</a></li>
+        <li><a href="#10-coverage">10. Coverage</a></li>
+      </ol>
+    </nav>
+    <div class="prose">
+<p>The pipeline is mandatory, and it is ordered. Inventory first, then exact duplicates, then near-duplicates, then a visual review of every candidate, then redaction on a copy, then derivatives, then a manifest and a coverage matrix. A screenshot that skipped a step does not ship.</p>
+<h2 id="1-inventory">1. Inventory</h2>
+<p>The inventory lists every tracked image with its bytes, dimensions and SHA-256. Images are grouped by origin: captures shipped with the product, captures found in QA or verification material, and everything else such as diagrams, icons and logos.</p>
+<p>Three kinds are excluded before review, and recorded as excluded: anything under an internal folder, anything that is not a UI capture, and anything below a usable resolution. The exclusion is a verdict, not a silent skip.</p>
+<h2 id="2-exact-duplicates">2. Exact duplicates</h2>
+<p>Identical SHA-256 hashes are one image. One is kept and the rest are recorded as duplicates of the kept id. The counts have to reconcile: inventory equals duplicates plus near-duplicates plus excluded-before-review plus reviewed.</p>
+<h2 id="3-near-duplicates">3. Near-duplicates</h2>
+<p>A perceptual hash clusters images that look alike. The playbook uses a Hamming distance of four or less, with Pillow and imagehash in a scratch environment, never in the repository. The clearest representative of each cluster is kept: sharpest, most complete state, no cursor, no toast covering content.</p>
+<p>The script that does this is <code>scripts/shots_inventory.py</code>. Its <code>inventory</code> stage is standard library only; <code>cluster</code> and <code>sheets</code> need Pillow, and <code>cluster</code> also needs imagehash.</p>
+<h2 id="4-contact-sheets-and-review">4. Contact sheets and review</h2>
+<p>Contact sheets are built outside the repository, four columns by three rows, with each tile labelled by its inventory id. Every tile is reviewed. For any tile where sensitive content might be present, the full-size original is opened read-only and inspected before a decision is made.</p>
+<p>The review checklist is specific: keys and tokens, passwords and filled password fields, mail and database credentials, connection strings, email addresses and personal names, invoices, project references, private IP addresses and hostnames, owner file paths, real third-party data, and internal file names that leak the process. Any hit makes the image a redaction candidate or an exclusion.</p>
+<h2 id="5-verdicts">5. Verdicts</h2>
+<div class="table-wrap"><table><caption>Every candidate gets exactly one verdict</caption><thead><tr><th scope="col">Verdict</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td>INCLUDE</td><td>Clean and public-safe.</td></tr><tr><td>REDACT</td><td>Useful, with sensitive regions that can be covered cleanly on a copy.</td></tr><tr><td>EXCLUDE</td><td>Not used, with a reason: duplicate, near-duplicate, forbidden folder, not UI, too small, wrong content, broken layout, loading state, error state, email present, real data or unclear.</td></tr></tbody></table></div>
+<p>The counts must reconcile. Reviewed equals INCLUDE plus REDACT plus EXCLUDE, and every candidate has a verdict. A candidate with no verdict is an unfinished review, not a pass.</p>
+<h2 id="6-redaction">6. Redaction</h2>
+<p>Redaction happens on a copy, never on the original. Solid rectangles cover the exact regions identified at full size, and each rectangle is recorded as x, y, width and height in original pixel coordinates. After redaction the derivative is opened again and checked: the sensitive text must be unreadable, and nothing else may be hidden.</p>
+<p>A crop can reveal what the full image hid, so the full review runs again on the crop or the redacted derivative.</p>
+<h2 id="7-derivatives">7. Derivatives</h2>
+<p>Each accepted image becomes two files: a full derivative at a maximum width of 1600 and quality around 80, and a thumbnail at a maximum width of 640 and quality around 75. Slugs are descriptive and lowercase, with no internal ids or numbering. The budgets are per-file and per-directory, and a derivative that exceeds them is re-encoded, not shipped.</p>
+<h2 id="8-the-manifest">8. The manifest</h2>
+<p><code>site/shots/manifest.json</code> records every derivative: slug, area, alt text, caption, source path, verdict, whether it was redacted, its width and height, and any callout coordinates. The builder reads the manifest and refuses to render an image that has no alt text or no caption.</p>
+<p>The source path is for traceability only. The builder never copies an original into the site; it copies the reviewed derivative.</p>
+<h2 id="9-alt-text-and-captions">9. Alt text and captions</h2>
+<p>Every image has both. The alt text describes what the screen shows and what a visitor learns, in one or two plain sentences, with no secret, path, email, project reference or internal jargon. The caption is one sentence: what it shows and why it matters. An empty state, a loading state and an error state each get a caption that says so; none of them is captioned as if it showed data.</p>
+<h2 id="10-coverage">10. Coverage</h2>
+<p>A coverage matrix maps every feature area to the page that shows it and the number of approved images. A feature area with no approved image shows no image slot at all. There is no empty frame waiting for a picture, and no caption written for an image that does not exist.</p>
+<aside class="callout callout-info"><p class="callout-title">This site's images</p><p>The plugin has no product UI, so this site uses original SVG diagrams and three redacted terminal captures of real commands. The originals are read-only; the derivatives are new files.</p></aside>
+<div class="hero-actions"><a class="btn btn-secondary" href="/gates/">The gates</a><a class="btn btn-primary" href="/deployment/">Deployment</a></div>
+    </div>
+  </div>
+</article>
+</main>
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <nav class="footer-nav" aria-label="Footer">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/install/">Install</a></li>
+        <li><a href="/reference/">Reference</a></li>
+        <li><a href="/faq/">FAQ</a></li>
+        <li><a href="/license/">License</a></li>
+        <li><a href="https://github.com/FiredMosquito831/repo-revamp">GitHub</a></li>
+      </ul>
+    </nav>
+    <p class="legal">repo-revamp is an independent project. It is not affiliated with, endorsed by, or sponsored by Anthropic. Claude and Claude Code are trademarks of Anthropic.</p>
+    <p class="legal">Licensed under the MIT License.</p>
+    <p class="legal muted">Copyright 2026 Danube Labs. Built from the plugin's own playbook.</p>
+  </div>
+</footer>
+<script src="/assets/site.js" defer></script>
+</body>
+</html>
